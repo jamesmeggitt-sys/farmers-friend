@@ -2,1310 +2,593 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Farmer's Friend">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The Farmer's Friend — Farm compliance made simple. Equipment tracking, chemical records, vehicle pre-starts, visitor sign-in and audit-ready reports. Built for Australian farmers.">
+<meta property="og:title" content="The Farmer's Friend — Farm Compliance Made Simple">
+<meta property="og:description" content="Stop drowning in farm paperwork. Equipment logs, chemical records, vehicle pre-starts and one-button compliance reports. Built for Australian farmers.">
 <meta name="theme-color" content="#0f3252">
-<title>The Farmer's Friend</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<title>The Farmer's Friend — Farm Compliance Made Simple</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root {
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;color:#1a2e3d;background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+/* ── VARIABLES ── */
+:root{
   --sky:#1a4f7a;--sky-dark:#0f3252;--sky-deeper:#0a2238;
-  --sky-light:#2d7ab8;--sky-pale:#e8f3fb;--sky-mid:#b8d9f0;
-  --grass:#2d7a3a;--grass-light:#3d9e4e;--grass-dark:#1e5228;
+  --sky-light:#2d7ab8;--sky-pale:#e8f3fb;
+  --grass:#2d7a3a;--grass-light:#3d9e4e;
   --wheat:#e8b84b;--wheat-dark:#c49020;
-  --white:#fff;--off-white:#f4f7fa;
-  --slate:#4a6075;--slate-light:#7a9ab5;
-  --border:#d0e4f0;--danger:#c0392b;--danger-dark:#922b21;
-  --orange:#e67e22;--purple:#6c3483;
-  --nav-h:68px;--top-h:56px;
-  --safe-bottom:env(safe-area-inset-bottom, 0px);
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html{height:100%;overflow:hidden;}
-body{
-  background:var(--off-white);color:var(--sky-deeper);
-  font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.5;
-  height:100%;overflow:hidden;
-  -webkit-font-smoothing:antialiased;
+  --slate:#4a6075;--border:#d0e4f0;
+  --danger:#c0392b;--orange:#e67e22;
 }
 
-/* ── App shell ── */
-#app{display:flex;flex-direction:column;height:100vh;height:100dvh;}
-.top-bar{
-  background:var(--sky-dark);
-  padding:12px 16px;
-  display:flex;align-items:center;gap:12px;
-  flex-shrink:0;
-  padding-top:calc(12px + env(safe-area-inset-top, 0px));
-  min-height:var(--top-h);
+/* ── NAVBAR ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,34,56,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(232,184,75,.2);padding:14px 24px;display:flex;align-items:center;gap:16px;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo .icon{width:36px;height:36px;background:var(--wheat);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.nav-logo .name{font-family:'DM Serif Display',serif;font-size:1.1rem;color:white;line-height:1.2;}
+.nav-logo .tagline{font-size:.65rem;color:rgba(184,217,240,.7);letter-spacing:.08em;text-transform:uppercase;}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.nav-link{color:rgba(255,255,255,.7);text-decoration:none;font-size:.88rem;font-weight:500;padding:6px 14px;border-radius:8px;transition:all .15s;}
+.nav-link:hover{color:white;background:rgba(255,255,255,.1);}
+.nav-cta{background:var(--wheat);color:var(--sky-deeper);font-weight:700;padding:9px 20px;border-radius:10px;text-decoration:none;font-size:.9rem;transition:all .15s;}
+.nav-cta:hover{background:#f0c85a;transform:translateY(-1px);}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(135deg,var(--sky-deeper) 0%,var(--sky-dark) 50%,#1a3d5c 100%);min-height:100vh;display:flex;align-items:center;padding:100px 24px 60px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,.015) 60px,rgba(255,255,255,.015) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,.015) 60px,rgba(255,255,255,.015) 61px);}
+.hero-content{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,184,75,.15);border:1px solid rgba(232,184,75,.3);border-radius:20px;padding:6px 14px;font-size:.8rem;color:var(--wheat);font-weight:600;margin-bottom:20px;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:3.2rem;color:white;line-height:1.1;margin-bottom:20px;}
+.hero h1 em{color:var(--wheat);font-style:normal;}
+.hero-sub{font-size:1.1rem;color:rgba(184,217,240,.85);line-height:1.7;margin-bottom:32px;max-width:480px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-hero-primary{background:var(--wheat);color:var(--sky-deeper);font-weight:700;font-size:1.05rem;padding:16px 32px;border-radius:14px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;border:none;cursor:pointer;}
+.btn-hero-primary:hover{background:#f0c85a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,184,75,.3);}
+.btn-hero-ghost{background:transparent;color:white;font-weight:600;font-size:1rem;padding:16px 28px;border-radius:14px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;border:2px solid rgba(255,255,255,.25);transition:all .2s;}
+.btn-hero-ghost:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.08);}
+.hero-stats{display:flex;gap:28px;margin-top:36px;padding-top:28px;border-top:1px solid rgba(255,255,255,.1);}
+.hero-stat .num{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--wheat);line-height:1;}
+.hero-stat .label{font-size:.75rem;color:rgba(184,217,240,.7);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;}
+
+/* ── PHONE MOCKUP ── */
+.phone-wrap{display:flex;justify-content:center;align-items:center;}
+.phone{width:260px;background:var(--sky-deeper);border-radius:36px;padding:12px;box-shadow:0 32px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.1);position:relative;}
+.phone-screen{background:#f4f7fa;border-radius:26px;overflow:hidden;aspect-ratio:9/19;}
+.phone-notch{width:80px;height:20px;background:var(--sky-deeper);border-radius:0 0 12px 12px;margin:0 auto 8px;position:relative;z-index:2;}
+.app-preview{padding:12px;background:#f4f7fa;}
+.app-topbar{background:var(--sky-dark);padding:10px 12px;display:flex;align-items:center;gap:8px;border-radius:12px 12px 0 0;margin:-12px -12px 12px;}
+.app-topbar .logo-sm{width:26px;height:26px;background:var(--wheat);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.app-topbar .title-sm{font-family:'DM Serif Display',serif;font-size:.82rem;color:white;}
+.app-topbar .farm-sm{font-size:.55rem;color:var(--sky-mid,#b8d9f0);text-transform:uppercase;}
+.stat-row-sm{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;}
+.stat-sm{background:white;border-radius:10px;padding:8px;border-top:2px solid var(--sky);}
+.stat-sm .n{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--sky);line-height:1;}
+.stat-sm .l{font-size:.55rem;font-weight:700;text-transform:uppercase;color:var(--slate);letter-spacing:.06em;margin-top:2px;}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;}
+.quick-btn{background:white;border-radius:10px;padding:10px 8px;text-align:center;border:1px solid var(--border);}
+.quick-btn.p{background:var(--sky);}
+.quick-btn.g{background:var(--grass);}
+.quick-btn .qi{font-size:1.1rem;display:block;margin-bottom:3px;}
+.quick-btn .ql{font-size:.58rem;font-weight:700;color:var(--sky-dark);}
+.quick-btn.p .ql,.quick-btn.g .ql{color:white;}
+.app-nav{display:flex;background:var(--sky-dark);border-radius:0 0 12px 12px;margin:-4px -12px -12px;padding:6px 0;}
+.app-nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 2px;}
+.app-nav-btn .ni{font-size:.9rem;}
+.app-nav-btn .nl{font-size:.42rem;color:rgba(255,255,255,.5);font-weight:600;text-transform:uppercase;}
+.app-nav-btn.active .nl{color:var(--wheat);}
+
+/* ── SECTIONS ── */
+.section{padding:80px 24px;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-badge{display:inline-block;background:var(--sky-pale);color:var(--sky);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px;}
+.section h2{font-family:'DM Serif Display',serif;font-size:2.4rem;color:var(--sky-dark);margin-bottom:16px;line-height:1.2;}
+.section h2 em{color:var(--sky);font-style:normal;}
+.section-sub{font-size:1.05rem;color:var(--slate);max-width:560px;line-height:1.7;}
+
+/* ── MODULES GRID ── */
+.modules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.module-card{background:white;border:1px solid var(--border);border-radius:20px;padding:28px;transition:all .2s;position:relative;overflow:hidden;}
+.module-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sky);}
+.module-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(26,79,122,.12);border-color:var(--sky-light);}
+.module-card.grass::before{background:var(--grass);}
+.module-card.wheat::before{background:var(--wheat);}
+.module-card.orange::before{background:var(--orange);}
+.module-card.danger::before{background:var(--danger);}
+.module-icon{font-size:2.2rem;margin-bottom:14px;display:block;}
+.module-card h3{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--sky-dark);margin-bottom:8px;}
+.module-card p{font-size:.88rem;color:var(--slate);line-height:1.6;}
+.module-features{margin-top:14px;display:flex;flex-direction:column;gap:5px;}
+.module-feature{font-size:.8rem;color:var(--slate);display:flex;align-items:center;gap:6px;}
+.module-feature::before{content:'✓';color:var(--grass);font-weight:700;flex-shrink:0;}
+
+/* ── WHO IT'S FOR ── */
+.who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.who-card{background:var(--sky-pale);border-radius:20px;padding:28px;text-align:center;}
+.who-icon{font-size:2.5rem;margin-bottom:12px;display:block;}
+.who-card h3{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--sky-dark);margin-bottom:8px;}
+.who-card p{font-size:.86rem;color:var(--slate);line-height:1.6;}
+
+/* ── HOW IT WORKS ── */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;position:relative;}
+.steps::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:2px;background:var(--border);}
+.step{text-align:center;position:relative;}
+.step-num{width:56px;height:56px;background:var(--sky);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Serif Display',serif;font-size:1.4rem;margin:0 auto 16px;position:relative;z-index:1;box-shadow:0 0 0 4px white,0 0 0 6px var(--sky-pale);}
+.step h3{font-weight:700;font-size:.95rem;color:var(--sky-dark);margin-bottom:6px;}
+.step p{font-size:.82rem;color:var(--slate);line-height:1.5;}
+
+/* ── COMPLIANCE SECTION ── */
+.compliance-wrap{background:var(--sky-deeper);border-radius:28px;padding:60px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.compliance-wrap h2{font-family:'DM Serif Display',serif;font-size:2.2rem;color:white;margin-bottom:16px;line-height:1.2;}
+.compliance-wrap p{color:rgba(184,217,240,.85);font-size:1rem;line-height:1.7;margin-bottom:24px;}
+.compliance-list{display:flex;flex-direction:column;gap:12px;}
+.compliance-item{display:flex;align-items:flex-start;gap:12px;color:rgba(184,217,240,.85);font-size:.9rem;}
+.compliance-item .ci-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px;}
+.compliance-cards{display:flex;flex-direction:column;gap:12px;}
+.compliance-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:14px;}
+.compliance-card .cc-icon{font-size:1.5rem;flex-shrink:0;}
+.compliance-card h4{font-size:.9rem;font-weight:600;color:white;margin-bottom:2px;}
+.compliance-card p{font-size:.78rem;color:rgba(184,217,240,.7);}
+
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.price-card{background:white;border:2px solid var(--border);border-radius:24px;padding:32px;position:relative;transition:all .2s;}
+.price-card.featured{border-color:var(--sky);background:var(--sky-pale);}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--sky);color:white;font-size:.72rem;font-weight:700;padding:4px 16px;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;}
+.price-name{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--sky-dark);margin-bottom:6px;}
+.price-amount{font-family:'DM Serif Display',serif;font-size:2.8rem;color:var(--sky-dark);line-height:1;margin-bottom:4px;}
+.price-amount span{font-size:1rem;font-weight:400;color:var(--slate);}
+.price-desc{font-size:.84rem;color:var(--slate);margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.price-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.price-feature{font-size:.86rem;color:var(--slate);display:flex;align-items:center;gap:8px;}
+.price-feature::before{content:'✓';color:var(--grass);font-weight:700;flex-shrink:0;}
+.price-feature.no{color:#aaa;}
+.price-feature.no::before{content:'✗';color:#ddd;}
+.btn-price{display:block;text-align:center;padding:13px;border-radius:12px;font-weight:700;font-size:.95rem;text-decoration:none;transition:all .15s;}
+.btn-price.primary{background:var(--sky);color:white;}
+.btn-price.primary:hover{background:var(--sky-light);}
+.btn-price.ghost{background:transparent;color:var(--sky);border:2px solid var(--sky);}
+.btn-price.ghost:hover{background:var(--sky-pale);}
+
+/* ── TESTIMONIAL ── */
+.testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.testimonial{background:white;border:1px solid var(--border);border-radius:20px;padding:28px;}
+.testimonial-text{font-size:.95rem;color:var(--sky-dark);line-height:1.7;margin-bottom:20px;font-style:italic;}
+.testimonial-text::before{content:'"';font-family:'DM Serif Display',serif;font-size:2rem;color:var(--sky-pale);line-height:0;vertical-align:-12px;margin-right:4px;}
+.testimonial-author{display:flex;align-items:center;gap:12px;}
+.author-av{width:40px;height:40px;border-radius:50%;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:white;flex-shrink:0;}
+.author-name{font-weight:700;font-size:.9rem;color:var(--sky-dark);}
+.author-role{font-size:.78rem;color:var(--slate);}
+.stars{color:var(--wheat);font-size:.9rem;margin-bottom:12px;}
+
+/* ── CTA SECTION ── */
+.cta-section{background:linear-gradient(135deg,var(--sky-deeper),var(--sky-dark));padding:80px 24px;text-align:center;}
+.cta-section h2{font-family:'DM Serif Display',serif;font-size:2.6rem;color:white;margin-bottom:16px;line-height:1.2;}
+.cta-section p{font-size:1.05rem;color:rgba(184,217,240,.85);margin-bottom:36px;max-width:520px;margin-left:auto;margin-right:auto;}
+.cta-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+
+/* ── FOOTER ── */
+footer{background:var(--sky-deeper);padding:40px 24px;border-top:1px solid rgba(255,255,255,.08);}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:1rem;color:white;}
+.footer-links{display:flex;gap:20px;}
+.footer-link{color:rgba(184,217,240,.6);font-size:.82rem;text-decoration:none;}
+.footer-link:hover{color:white;}
+.footer-copy{font-size:.78rem;color:rgba(184,217,240,.4);}
+
+/* ── ABN STRIP ── */
+.abn-strip{background:rgba(232,184,75,.08);border-top:1px solid rgba(232,184,75,.15);padding:10px 24px;text-align:center;font-size:.75rem;color:rgba(184,217,240,.5);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .hero-content{grid-template-columns:1fr;}
+  .phone-wrap{display:none;}
+  .hero h1{font-size:2.2rem;}
+  .modules-grid,.who-grid,.pricing-grid,.testimonial-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr 1fr;}
+  .steps::before{display:none;}
+  .compliance-wrap{grid-template-columns:1fr;padding:32px 24px;}
+  .section h2{font-size:1.9rem;}
+  .nav-links .nav-link{display:none;}
+  .cta-section h2{font-size:1.9rem;}
 }
-.top-bar .logo{width:34px;height:34px;background:var(--wheat);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
-.top-bar .title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:white;line-height:1.2;}
-.top-bar .farm{font-size:.7rem;color:var(--sky-mid);letter-spacing:.08em;text-transform:uppercase;}
-.top-bar .clock{margin-left:auto;text-align:right;flex-shrink:0;}
-.top-bar .clock .time{font-size:.95rem;font-weight:600;color:var(--wheat);}
-.top-bar .clock .date{font-size:.65rem;color:var(--sky-mid);}
-
-.page-wrap{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 8px);}
-
-/* ── Bottom nav ── */
-.bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:var(--sky-dark);
-  border-top:2px solid var(--wheat);
-  display:flex;
-  padding-bottom:var(--safe-bottom);
-  z-index:100;
-  box-shadow:0 -4px 20px rgba(0,0,0,.3);
+@media(max-width:480px){
+  .hero{padding:80px 16px 40px;}
+  .section{padding:56px 16px;}
+  .hero h1{font-size:1.9rem;}
+  .steps{grid-template-columns:1fr;}
 }
-.nav-btn{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:10px 4px 8px;
-  background:none;border:none;cursor:pointer;
-  color:rgba(255,255,255,.5);
-  font-family:'DM Sans';font-size:.6rem;font-weight:600;
-  letter-spacing:.05em;text-transform:uppercase;
-  transition:color .15s;
-  position:relative;min-height:var(--nav-h);
-}
-.nav-btn.active{color:var(--wheat);}
-.nav-btn .nav-icon{font-size:1.5rem;margin-bottom:3px;display:block;}
-.nav-badge{
-  position:absolute;top:8px;right:calc(50% - 18px);
-  background:var(--danger);color:white;
-  border-radius:10px;padding:1px 5px;
-  font-size:.6rem;font-weight:700;min-width:16px;text-align:center;
-}
-
-/* ── Cards & content ── */
-.page{padding:16px;display:flex;flex-direction:column;gap:14px;}
-.card{background:var(--white);border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(26,79,122,.08);border:1px solid var(--border);}
-.card-title{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--sky-dark);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
-
-/* ── Big action buttons ── */
-.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.action-btn{
-  background:var(--white);border:1.5px solid var(--border);
-  border-radius:16px;padding:20px 14px;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  cursor:pointer;transition:all .15s;
-  font-family:'DM Sans';
-}
-.action-btn:active{transform:scale(.97);background:var(--sky-pale);}
-.action-btn .icon{font-size:2rem;}
-.action-btn .label{font-size:.82rem;font-weight:600;color:var(--sky-dark);text-align:center;line-height:1.3;}
-.action-btn.primary{background:var(--sky);border-color:var(--sky-dark);}
-.action-btn.primary .label{color:white;}
-.action-btn.success{background:var(--grass);border-color:var(--grass-dark);}
-.action-btn.success .label{color:white;}
-
-/* ── Forms ── */
-.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
-label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);}
-input,select,textarea{
-  background:var(--off-white);
-  border:2px solid var(--border);
-  border-radius:12px;
-  color:var(--sky-deeper);
-  padding:14px 16px;
-  font-family:'DM Sans';font-size:1rem;
-  width:100%;
-  transition:border-color .15s;
-  -webkit-appearance:none;appearance:none;
-}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--sky-light);background:white;}
-input::placeholder,textarea::placeholder{color:var(--slate-light);}
-textarea{resize:none;min-height:80px;}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a6075' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;}
-
-/* ── Buttons ── */
-.btn{
-  font-family:'DM Sans';font-weight:700;font-size:1rem;
-  padding:16px 24px;border:none;border-radius:14px;
-  cursor:pointer;transition:all .15s;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  width:100%;
-}
-.btn:active{transform:scale(.98);}
-.btn:disabled{opacity:.45;cursor:not-allowed;}
-.btn-primary{background:var(--sky);color:white;box-shadow:0 3px 0 var(--sky-dark);}
-.btn-success{background:var(--grass);color:white;box-shadow:0 3px 0 var(--grass-dark);}
-.btn-wheat{background:var(--wheat);color:var(--sky-deeper);box-shadow:0 3px 0 var(--wheat-dark);font-size:1.05rem;}
-.btn-ghost{background:transparent;color:var(--slate);border:2px solid var(--border);}
-.btn-danger{background:var(--danger);color:white;box-shadow:0 3px 0 var(--danger-dark);}
-.btn-sm{padding:10px 18px;font-size:.88rem;border-radius:10px;width:auto;}
-
-/* ── Stats ── */
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.stat-card{background:var(--white);border-radius:14px;padding:16px;border-top:3px solid var(--sky);box-shadow:0 2px 8px rgba(26,79,122,.07);}
-.stat-num{font-family:'DM Serif Display',serif;font-size:2.2rem;line-height:1;color:var(--sky);}
-.stat-label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-top:3px;}
-
-/* ── Badges ── */
-.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;}
-.badge-out{background:rgba(192,57,43,.12);color:var(--danger);border:1px solid rgba(192,57,43,.2);}
-.badge-in{background:rgba(45,122,58,.12);color:var(--grass);border:1px solid rgba(45,122,58,.2);}
-.badge-overdue{background:rgba(232,184,75,.2);color:var(--wheat-dark);border:1px solid rgba(232,184,75,.3);}
-.badge-pass{background:rgba(45,122,58,.12);color:var(--grass);border:1px solid rgba(45,122,58,.2);}
-.badge-fail{background:rgba(192,57,43,.12);color:var(--danger);border:1px solid rgba(192,57,43,.2);}
-.badge-risk{background:rgba(192,57,43,.12);color:var(--danger);border:1px solid rgba(192,57,43,.2);}
-.badge-clear{background:rgba(45,122,58,.12);color:var(--grass);border:1px solid rgba(45,122,58,.2);}
-.badge-whp{background:rgba(230,126,34,.12);color:var(--orange);border:1px solid rgba(230,126,34,.2);}
-
-/* ── List items ── */
-.list-item{
-  background:var(--white);border-radius:14px;padding:14px 16px;
-  margin-bottom:10px;border:1px solid var(--border);
-  display:flex;align-items:center;gap:12px;
-  cursor:pointer;transition:all .15s;
-}
-.list-item:active{background:var(--sky-pale);}
-.list-item .item-icon{font-size:1.5rem;flex-shrink:0;}
-.list-item .item-body{flex:1;min-width:0;}
-.list-item .item-title{font-weight:600;font-size:.95rem;color:var(--sky-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.list-item .item-sub{font-size:.78rem;color:var(--slate);margin-top:2px;}
-.list-item .item-right{flex-shrink:0;text-align:right;}
-.list-item.danger-left{border-left:4px solid var(--danger);}
-.list-item.success-left{border-left:4px solid var(--grass);}
-.list-item.warn-left{border-left:4px solid var(--orange);}
-
-/* ── Camera ── */
-.cam-box{
-  background:var(--off-white);border:2px dashed var(--border);
-  border-radius:14px;overflow:hidden;position:relative;
-  min-height:200px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-}
-.cam-box video,.cam-box img.preview{width:100%;max-height:260px;object-fit:cover;display:block;}
-.cam-ts{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(10,34,56,.85));padding:8px 12px;font-size:.75rem;color:var(--wheat);font-weight:600;}
-.cam-ph{display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--slate-light);padding:32px 20px;text-align:center;}
-.cam-ph .cam-icon{font-size:3rem;opacity:.3;}
-.cam-ph .cam-text{font-size:.9rem;}
-.cam-controls{display:flex;gap:10px;margin-top:10px;}
-.cam-controls .btn{flex:1;}
-
-/* ── Check items ── */
-.check-item{
-  background:var(--white);border:2px solid var(--border);
-  border-radius:14px;padding:14px 16px;margin-bottom:10px;
-}
-.check-item.pass{border-color:var(--grass);background:rgba(45,122,58,.03);}
-.check-item.fail{border-color:var(--danger);background:rgba(192,57,43,.03);}
-.check-label{font-weight:600;font-size:.95rem;margin-bottom:3px;}
-.check-sub{font-size:.78rem;color:var(--slate);margin-bottom:10px;}
-.check-btns{display:flex;gap:8px;}
-.ck-btn{flex:1;padding:10px;border:2px solid var(--border);border-radius:10px;background:none;cursor:pointer;font-family:'DM Sans';font-size:.85rem;font-weight:700;transition:all .15s;}
-.ck-btn:active{transform:scale(.97);}
-.ck-btn.pass-btn{border-color:var(--grass);color:var(--grass);}
-.ck-btn.pass-btn.active{background:var(--grass);color:white;}
-.ck-btn.fail-btn{border-color:var(--danger);color:var(--danger);}
-.ck-btn.fail-btn.active{background:var(--danger);color:white;}
-.ck-btn.na-btn{border-color:var(--slate-light);color:var(--slate);}
-.ck-btn.na-btn.active{background:var(--slate);color:white;}
-
-/* ── Biosec ── */
-.bio-item{background:var(--white);border:2px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
-.bio-item.ok{border-color:var(--grass);}
-.bio-item.risk{border-color:var(--danger);background:rgba(192,57,43,.03);}
-.bio-q{font-weight:600;font-size:.92rem;margin-bottom:3px;}
-.bio-s{font-size:.76rem;color:var(--slate);margin-bottom:10px;}
-.bio-btns{display:flex;gap:8px;}
-.bio-btn{flex:1;padding:12px;border:2px solid var(--border);border-radius:10px;background:none;cursor:pointer;font-family:'DM Sans';font-size:.9rem;font-weight:700;transition:all .15s;}
-.bio-btn.yes-btn{border-color:var(--grass);color:var(--grass);}
-.bio-btn.yes-btn.active{background:var(--grass);color:white;}
-.bio-btn.no-btn{border-color:var(--danger);color:var(--danger);}
-.bio-btn.no-btn.active{background:var(--danger);color:white;}
-
-/* ── Sig pad ── */
-.sig-pad{border:2px solid var(--border);border-radius:14px;background:var(--off-white);cursor:crosshair;touch-action:none;display:block;width:100%;height:130px;}
-
-/* ── WHP bar ── */
-.whp-bar{height:8px;border-radius:4px;background:var(--border);overflow:hidden;margin-top:6px;}
-.whp-fill{height:100%;border-radius:4px;}
-
-/* ── Toast ── */
-.toast-wrap{position:fixed;top:calc(var(--top-h) + env(safe-area-inset-top,0px) + 8px);left:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
-.toast{padding:14px 18px;border-radius:14px;font-weight:600;font-size:.9rem;box-shadow:0 4px 20px rgba(0,0,0,.2);animation:tIn .3s ease;color:white;pointer-events:auto;}
-.toast.success{background:var(--grass);}
-.toast.error{background:var(--danger);}
-.toast.warning{background:var(--orange);}
-@keyframes tIn{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
-
-/* ── Modal / sheet ── */
-.sheet-bg{position:fixed;inset:0;background:rgba(10,34,56,.7);z-index:200;display:flex;align-items:flex-end;}
-.sheet{background:white;border-radius:24px 24px 0 0;padding:20px 20px calc(20px + var(--safe-bottom));width:100%;max-height:85vh;overflow-y:auto;}
-.sheet-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
-.sheet-title{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--sky-dark);margin-bottom:16px;}
-
-/* ── Spinner ── */
-.spinner{width:20px;height:20px;border:2.5px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-/* ── Empty ── */
-.empty{text-align:center;padding:48px 20px;color:var(--slate-light);}
-.empty .icon{font-size:3rem;display:block;margin-bottom:10px;opacity:.3;}
-.empty p{font-size:.9rem;}
-
-/* ── Auth ── */
-.auth-wrap{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:var(--sky-deeper);}
-.auth-hero{background:var(--sky-dark);padding:48px 24px 32px;text-align:center;padding-top:calc(48px + env(safe-area-inset-top,0px));}
-.auth-card{flex:1;background:white;border-radius:24px 24px 0 0;padding:28px 20px calc(28px + var(--safe-bottom));overflow-y:auto;}
-
-.section-title{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin:16px 0 10px;}
-.divider{height:1px;background:var(--border);margin:16px 0;}
-.error-msg{background:rgba(192,57,43,.08);border:2px solid rgba(192,57,43,.2);border-radius:12px;padding:12px 16px;color:var(--danger);font-size:.88rem;}
-
-/* ── Vehicle picker ── */
-.veh-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.veh-card{background:var(--white);border:2px solid var(--border);border-radius:16px;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .15s;}
-.veh-card:active{transform:scale(.97);}
-.veh-card .vicon{font-size:2rem;}
-.veh-card .vname{font-size:.82rem;font-weight:700;color:var(--sky-dark);text-align:center;}
-.veh-card .vcount{font-size:.7rem;color:var(--slate);}
-
-/* ── Report toggle ── */
-.mod-row{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--white);border:1.5px solid var(--border);border-radius:14px;margin-bottom:10px;cursor:pointer;}
-.mod-row.on{border-color:var(--sky-light);background:var(--sky-pale);}
-.tog{width:48px;height:28px;background:var(--border);border-radius:14px;position:relative;flex-shrink:0;transition:background .2s;}
-.tog.on{background:var(--sky);}
-.tog::after{content:'';position:absolute;width:22px;height:22px;background:white;border-radius:50%;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
-.tog.on::after{transform:translateX(20px);}
-
-/* ── Alert box ── */
-.alert{background:rgba(230,126,34,.08);border:2px solid rgba(230,126,34,.25);border-radius:14px;padding:14px 16px;font-size:.88rem;color:var(--orange-dark, #ca6f1e);}
-.alert strong{display:block;margin-bottom:4px;}
 </style>
 </head>
 <body>
-<div class="toast-wrap" id="toasts"></div>
-<div id="root"></div>
 
-<script>
-var SB_URL='https://faiaweatayuekswvgish.supabase.co';
-var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhaWF3ZWF0YXl1ZWtzd3ZnaXNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2MjAwNzUsImV4cCI6MjA4OTE5NjA3NX0.hPwKUz0QaveDRU9tXEqNbAxn4xzYs6COBzahialXoi4';
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="icon">🌾</div>
+    <div>
+      <div class="name">The Farmer's Friend</div>
+      <div class="tagline">Farm Compliance</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#modules" class="nav-link">Features</a>
+    <a href="#pricing" class="nav-link">Pricing</a>
+    <a href="#compliance" class="nav-link">Compliance</a>
+    <a href="https://farmers-friend-livid.vercel.app" class="nav-cta">Start Free →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge">🇦🇺 Built for Australian Farmers</div>
+      <h1>Stop drowning in farm <em>paperwork</em></h1>
+      <p class="hero-sub">Equipment logs, chemical records, vehicle pre-starts, visitor sign-in and one-button audit reports — all on your phone, all in one place.</p>
+      <div class="hero-actions">
+        <a href="https://farmers-friend-livid.vercel.app" class="btn-hero-primary">🌾 Start for Free</a>
+        <a href="#modules" class="btn-hero-ghost">See How It Works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">5</div><div class="label">Compliance Modules</div></div>
+        <div class="hero-stat"><div class="num">$0</div><div class="label">To Get Started</div></div>
+        <div class="hero-stat"><div class="num">60s</div><div class="label">To Log Anything</div></div>
+      </div>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="app-preview">
+            <div class="app-topbar">
+              <div class="logo-sm">🌾</div>
+              <div>
+                <div class="title-sm">The Farmer's Friend</div>
+                <div class="farm-sm">Barker Grazing Co.</div>
+              </div>
+            </div>
+            <div class="stat-row-sm">
+              <div class="stat-sm" style="border-top-color:#c0392b"><div class="n" style="color:#c0392b">3</div><div class="l">Items Out</div></div>
+              <div class="stat-sm" style="border-top-color:#2d7a3a"><div class="n" style="color:#2d7a3a">2</div><div class="l">On Site</div></div>
+              <div class="stat-sm" style="border-top-color:#e67e22"><div class="n" style="color:#e67e22">4</div><div class="l">Active WHPs</div></div>
+              <div class="stat-sm" style="border-top-color:#e8b84b"><div class="n" style="color:#c49020">1</div><div class="l">Overdue</div></div>
+            </div>
+            <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;color:#4a6075;letter-spacing:.08em;margin-bottom:6px;">Quick Actions</div>
+            <div class="quick-grid">
+              <div class="quick-btn p"><span class="qi">🔓</span><div class="ql">Check Out</div></div>
+              <div class="quick-btn g"><span class="qi">🔒</span><div class="ql">Return Item</div></div>
+              <div class="quick-btn"><span class="qi">🧪</span><div class="ql" style="color:#1a4f7a;">Log Chemical</div></div>
+              <div class="quick-btn"><span class="qi">✅</span><div class="ql" style="color:#1a4f7a;">Pre-start</div></div>
+            </div>
+            <div style="font-size:.55rem;font-weight:700;text-transform:uppercase;color:#4a6075;letter-spacing:.08em;margin:8px 0 5px;">Currently Out</div>
+            <div style="background:white;border-radius:8px;padding:7px 8px;border-left:3px solid #e67e22;margin-bottom:4px;">
+              <div style="font-size:.65rem;font-weight:700;color:#1a4f7a;">Chainsaw</div>
+              <div style="font-size:.55rem;color:#4a6075;">Jake Thompson → Bush Block</div>
+            </div>
+            <div style="background:white;border-radius:8px;padding:7px 8px;border-left:3px solid #c0392b;margin-bottom:4px;">
+              <div style="font-size:.65rem;font-weight:700;color:#1a4f7a;">Wire Strainer</div>
+              <div style="font-size:.55rem;color:#c0392b;">⚠ Overdue · Sarah Miller</div>
+            </div>
+          </div>
+          <div class="app-nav">
+            <div class="app-nav-btn active"><span class="ni">📊</span><span class="nl">Dashboard</span></div>
+            <div class="app-nav-btn"><span class="ni">🏚️</span><span class="nl">Shed</span></div>
+            <div class="app-nav-btn"><span class="ni">🧪</span><span class="nl">Chemicals</span></div>
+            <div class="app-nav-btn"><span class="ni">🚜</span><span class="nl">Pre-starts</span></div>
+            <div class="app-nav-btn"><span class="ni">⚙️</span><span class="nl">Account</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="section" id="modules" style="background:#f7fafd;">
+  <div class="section-inner">
+    <div class="section-badge">Everything in One App</div>
+    <h2>Five modules. <em>One subscription.</em></h2>
+    <p class="section-sub">Every compliance requirement your farm faces — covered. From who took what out of the shed, to what chemicals are in withholding period, to who was on your property today.</p>
+    <div class="modules-grid">
+      <div class="module-card">
+        <span class="module-icon">🏚️</span>
+        <h3>Shed & Equipment Log</h3>
+        <p>Track every tool, vehicle and piece of equipment leaving and returning to your shed. Photo proof with timestamps.</p>
+        <div class="module-features">
+          <div class="module-feature">Who took what and when</div>
+          <div class="module-feature">Expected return alerts</div>
+          <div class="module-feature">Photo documentation</div>
+          <div class="module-feature">Overdue notifications</div>
+        </div>
+      </div>
+      <div class="module-card grass">
+        <span class="module-icon">🧪</span>
+        <h3>Chemical & Spray Records</h3>
+        <p>APVMA-compliant chemical application records with withholding period tracking and automatic expiry alerts.</p>
+        <div class="module-features">
+          <div class="module-feature">APVMA registration numbers</div>
+          <div class="module-feature">Withholding period countdown</div>
+          <div class="module-feature">Weather conditions logged</div>
+          <div class="module-feature">Operator licence tracking</div>
+        </div>
+      </div>
+      <div class="module-card wheat">
+        <span class="module-icon">🚜</span>
+        <h3>Vehicle Pre-start Checks</h3>
+        <p>Daily pre-start checklists for tractors, forklifts, trucks and ATVs. Defects flagged and tracked automatically.</p>
+        <div class="module-features">
+          <div class="module-feature">6 vehicle type checklists</div>
+          <div class="module-feature">Pass / Fail / N/A per item</div>
+          <div class="module-feature">Defect descriptions</div>
+          <div class="module-feature">Odometer & hours tracking</div>
+        </div>
+      </div>
+      <div class="module-card orange">
+        <span class="module-icon">👤</span>
+        <h3>Visitor & Biosecurity Sign-In</h3>
+        <p>Digital sign-in with full biosecurity declarations including FMD risk questions. Digital signature captured on screen.</p>
+        <div class="module-features">
+          <div class="module-feature">7-question biosec declaration</div>
+          <div class="module-feature">FMD & exotic disease risk flags</div>
+          <div class="module-feature">Digital signature pad</div>
+          <div class="module-feature">Live on-site visibility</div>
+        </div>
+      </div>
+      <div class="module-card danger">
+        <span class="module-icon">📄</span>
+        <h3>One-Button Compliance Reports</h3>
+        <p>Select a date range, hit Generate. Out comes a professional PDF covering every module — ready to hand to any auditor.</p>
+        <div class="module-features">
+          <div class="module-feature">WorkSafe ready</div>
+          <div class="module-feature">Food safety audit ready</div>
+          <div class="module-feature">Insurance claim ready</div>
+          <div class="module-feature">APVMA compliance ready</div>
+        </div>
+      </div>
+      <div class="module-card" style="background:var(--sky-deeper);border-color:var(--sky);">
+        <span class="module-icon">📱</span>
+        <h3 style="color:white;">Works on Any Device</h3>
+        <p style="color:rgba(184,217,240,.8);">Optimised for iPhone and Android. Install it on your home screen — works exactly like a native app, no App Store required.</p>
+        <div class="module-features" style="margin-top:14px;">
+          <div class="module-feature" style="color:rgba(184,217,240,.8);">iPhone & Android</div>
+          <div class="module-feature" style="color:rgba(184,217,240,.8);">Works in paddock with poor signal</div>
+          <div class="module-feature" style="color:rgba(184,217,240,.8);">Real-time sync across devices</div>
+          <div class="module-feature" style="color:rgba(184,217,240,.8);">No app store needed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-badge">Simple as That</div>
+    <h2>Up and running in <em>under 5 minutes</em></h2>
+    <p class="section-sub">No IT department needed. No training required. If you can use your phone, you can use The Farmer's Friend.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Create your farm</h3>
+        <p>Sign up with your email. Your farm account is ready instantly with a default equipment catalogue.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Add your team</h3>
+        <p>Invite workers by email. They sign in on their own phone — no setup needed on their end.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Start logging</h3>
+        <p>Check out equipment, log sprays, do pre-starts. Everything syncs to the cloud in real time.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Audit ready</h3>
+        <p>When the inspector arrives, hit Generate Report. Hand them a professional PDF and walk away confident.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="section" style="background:#f7fafd;">
+  <div class="section-inner">
+    <div class="section-badge">Who It's For</div>
+    <h2>Built for <em>Australian agriculture</em></h2>
+    <p class="section-sub">Whether you're a sole trader or managing a large operation, The Farmer's Friend scales with you.</p>
+    <div class="who-grid">
+      <div class="who-card">
+        <span class="who-icon">🐄</span>
+        <h3>Cattle & Sheep Producers</h3>
+        <p>Track drenches, vaccines and chemical withholding periods. Log who's been on your property. Stay compliant with NLIS and food safety requirements.</p>
+      </div>
+      <div class="who-card">
+        <span class="who-icon">🌾</span>
+        <h3>Cropping & Mixed Farms</h3>
+        <p>Log every spray with APVMA numbers, weather conditions and withholding periods. Export-ready records that meet supermarket supplier requirements.</p>
+      </div>
+      <div class="who-card">
+        <span class="who-icon">🏗️</span>
+        <h3>Agribusiness Operations</h3>
+        <p>Multiple farms, large teams, forklifts and heavy machinery. Pre-start checklists, contractor sign-in and full audit trails for WorkSafe inspections.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="section" id="compliance">
+  <div class="section-inner">
+    <div class="compliance-wrap">
+      <div>
+        <div style="display:inline-block;background:rgba(232,184,75,.15);border:1px solid rgba(232,184,75,.3);border-radius:20px;padding:5px 14px;font-size:.78rem;color:var(--wheat);font-weight:600;margin-bottom:16px;">Audit Ready</div>
+        <h2>When the inspector shows up, <em style="color:var(--wheat);">be ready</em></h2>
+        <p>Australian farmers face increasing compliance requirements from WorkSafe, food safety auditors, supermarket suppliers and the APVMA. The Farmer's Friend captures everything they want to see — automatically, every day.</p>
+        <div class="compliance-list">
+          <div class="compliance-item"><span class="ci-icon">✅</span><span>WorkSafe Victoria & state equivalents — equipment logs, pre-start checks, incident records</span></div>
+          <div class="compliance-item"><span class="ci-icon">✅</span><span>APVMA chemical record-keeping requirements — full spray records with APVMA numbers</span></div>
+          <div class="compliance-item"><span class="ci-icon">✅</span><span>SQF & GlobalG.A.P food safety audits — traceability from paddock to plate</span></div>
+          <div class="compliance-item"><span class="ci-icon">✅</span><span>Woolworths & Coles supplier requirements — documented biosecurity and chemical records</span></div>
+          <div class="compliance-item"><span class="ci-icon">✅</span><span>Farm biosecurity — FMD and exotic disease visitor declarations</span></div>
+        </div>
+      </div>
+      <div class="compliance-cards">
+        <div class="compliance-card">
+          <span class="cc-icon">📋</span>
+          <div>
+            <h4>Everything timestamped</h4>
+            <p>Every record has an exact date, time and the name of who logged it. Tamper-evident audit trail.</p>
+          </div>
+        </div>
+        <div class="compliance-card">
+          <span class="cc-icon">📷</span>
+          <div>
+            <h4>Photo proof built in</h4>
+            <p>Camera captures photos with your farm name and timestamp burned in. Undeniable evidence.</p>
+          </div>
+        </div>
+        <div class="compliance-card">
+          <span class="cc-icon">📄</span>
+          <div>
+            <h4>One-button PDF report</h4>
+            <p>Select your date range, hit Generate. Professional report covering all modules instantly.</p>
+          </div>
+        </div>
+        <div class="compliance-card">
+          <span class="cc-icon">☁️</span>
+          <div>
+            <h4>Secure cloud storage</h4>
+            <p>All records stored securely in the cloud. Never lose a logbook to a flood or fire again.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing" style="background:#f7fafd;">
+  <div class="section-inner">
+    <div class="section-badge">Simple Pricing</div>
+    <h2>Start free. <em>Upgrade when you're ready.</em></h2>
+    <p class="section-sub">No lock-in contracts. Cancel anytime. Your data always belongs to you.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Starter</div>
+        <div class="price-amount">$0<span>/month</span></div>
+        <div class="price-desc">Get started at no cost. Perfect for trying it out.</div>
+        <div class="price-features">
+          <div class="price-feature">1 farm, up to 2 users</div>
+          <div class="price-feature">All 5 modules</div>
+          <div class="price-feature">30-day record history</div>
+          <div class="price-feature no">PDF compliance reports</div>
+          <div class="price-feature no">Unlimited history</div>
+          <div class="price-feature no">Priority support</div>
+        </div>
+        <a href="https://farmers-friend-livid.vercel.app" class="btn-price ghost">Get Started Free</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most Popular</div>
+        <div class="price-name">Pro</div>
+        <div class="price-amount">$29<span>/farm/month</span></div>
+        <div class="price-desc">Everything a working farm needs. The one farmers choose.</div>
+        <div class="price-features">
+          <div class="price-feature">1 farm, unlimited users</div>
+          <div class="price-feature">All 5 modules</div>
+          <div class="price-feature">Unlimited record history</div>
+          <div class="price-feature">PDF compliance reports</div>
+          <div class="price-feature">Overdue email alerts</div>
+          <div class="price-feature">Email support</div>
+        </div>
+        <a href="https://farmers-friend-livid.vercel.app" class="btn-price primary">Start Pro Trial</a>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Enterprise</div>
+        <div class="price-amount">$79<span>/month</span></div>
+        <div class="price-desc">Multiple farms, large teams and agribusiness operations.</div>
+        <div class="price-features">
+          <div class="price-feature">Multiple farm properties</div>
+          <div class="price-feature">Unlimited users</div>
+          <div class="price-feature">Farm owner dashboard</div>
+          <div class="price-feature">Custom branding</div>
+          <div class="price-feature">API access</div>
+          <div class="price-feature">Priority phone support</div>
+        </div>
+        <a href="mailto:hello@thefarmersfriend.com.au" class="btn-price ghost">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-badge">What Farmers Say</div>
+    <h2>Built by a farmer. <em>For farmers.</em></h2>
+    <p class="section-sub">Real feedback from Australian farmers who've used The Farmer's Friend.</p>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">Finally something that actually works on my phone out in the paddock. Logged a spray in under a minute. The withholding period tracker alone is worth it.</div>
+        <div class="testimonial-author">
+          <div class="author-av">J</div>
+          <div><div class="author-name">James M.</div><div class="author-role">Mixed Farmer, Regional Victoria</div></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">Had a WorkSafe inspection last month. Pulled up the compliance report on my phone and handed it to them in 30 seconds. They were impressed. Never going back to paper.</div>
+        <div class="testimonial-author">
+          <div class="author-av">D</div>
+          <div><div class="author-name">David K.</div><div class="author-role">Cattle Producer, NSW</div></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text">We supply to Woolworths and the paperwork requirements are intense. This covers everything they ask for and my agronomist loves that I can share the reports instantly.</div>
+        <div class="testimonial-author">
+          <div class="author-av">S</div>
+          <div><div class="author-name">Sarah B.</div><div class="author-role">Vegetable Grower, Queensland</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div style="max-width:700px;margin:0 auto;">
+    <div style="font-size:3rem;margin-bottom:16px;">🌾</div>
+    <h2>Ready to get your farm audit-ready?</h2>
+    <p>Join Australian farmers who've ditched the clipboards. Start free — no credit card required.</p>
+    <div class="cta-actions">
+      <a href="https://farmers-friend-livid.vercel.app" class="btn-hero-primary">🌾 Start for Free Today</a>
+      <a href="mailto:hello@thefarmersfriend.com.au" class="btn-hero-ghost">📧 Get in Touch</a>
+    </div>
+    <div style="margin-top:24px;font-size:.82rem;color:rgba(184,217,240,.5);">Free plan available · No credit card · Cancel anytime · ABN 29 165 703 108</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">🌾 The Farmer's Friend</div>
+      <div style="font-size:.75rem;color:rgba(184,217,240,.4);margin-top:4px;">Farm compliance made simple for Australian farmers.</div>
+    </div>
+    <div class="footer-links">
+      <a href="#modules" class="footer-link">Features</a>
+      <a href="#pricing" class="footer-link">Pricing</a>
+      <a href="#compliance" class="footer-link">Compliance</a>
+      <a href="mailto:hello@thefarmersfriend.com.au" class="footer-link">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 The Farmer's Friend · ABN 29 165 703 108</div>
+  </div>
+</footer>
+<div class="abn-strip">thefarmersfriend.com.au · hello@thefarmersfriend.com.au · ABN 29 165 703 108 · Built in Australia 🇦🇺</div>
 
-var VEHICLES={
-  'Tractor':{icon:'🚜',checks:[{id:'oil',l:'Engine oil',s:'Check dipstick'},{id:'coolant',l:'Coolant',s:'Check reservoir'},{id:'hyd',l:'Hydraulic oil',s:'Check sight glass'},{id:'fuel',l:'Fuel level',s:'Adequate for work'},{id:'tyres',l:'Tyres',s:'Condition and pressure'},{id:'lights',l:'Lights',s:'All working'},{id:'brakes',l:'Brakes',s:'Test before moving'},{id:'rops',l:'ROPS / rollbar',s:'Fitted and secure'},{id:'belt',l:'Seatbelt',s:'Present and latches'},{id:'pto',l:'PTO guard',s:'Fitted and secure'},{id:'leaks',l:'No leaks',s:'Check underneath'},{id:'fire',l:'Fire extinguisher',s:'Present and charged'}]},
-  'Forklift':{icon:'🏗️',checks:[{id:'oil',l:'Engine oil',s:'Check dipstick'},{id:'hyd',l:'Hydraulic oil',s:'Check sight glass'},{id:'fuel',l:'Fuel/battery',s:'Adequate'},{id:'tyres',l:'Tyres',s:'Condition'},{id:'forks',l:'Forks',s:'No cracks or bends'},{id:'mast',l:'Mast & chains',s:'No damage'},{id:'lights',l:'Lights & horn',s:'Working'},{id:'brakes',l:'Brakes',s:'Park brake holds'},{id:'belt',l:'Seatbelt',s:'Functional'},{id:'overhead',l:'Overhead guard',s:'Fitted and secure'},{id:'plate',l:'Capacity plate',s:'Present and legible'},{id:'leaks',l:'No leaks',s:'Check underneath'},{id:'fire',l:'Fire extinguisher',s:'Present'}]},
-  'Truck / Ute':{icon:'🚛',checks:[{id:'oil',l:'Engine oil',s:'Check dipstick'},{id:'fuel',l:'Fuel',s:'Adequate'},{id:'tyres',l:'Tyres',s:'All including spare'},{id:'lights',l:'Lights',s:'All working'},{id:'brakes',l:'Brakes',s:'Foot and handbrake'},{id:'belts',l:'Seatbelts',s:'All positions'},{id:'mirrors',l:'Mirrors',s:'Clean and adjusted'},{id:'horn',l:'Horn',s:'Functional'},{id:'load',l:'Load secured',s:'If carrying'},{id:'fire',l:'Fire extinguisher',s:'Present'}]},
-  'ATV / Quad':{icon:'🏍️',checks:[{id:'oil',l:'Engine oil',s:'Check'},{id:'fuel',l:'Fuel',s:'Adequate'},{id:'tyres',l:'Tyres',s:'All four'},{id:'brakes',l:'Brakes',s:'Both hand brakes'},{id:'helmet',l:'Helmet',s:'Mandatory'},{id:'opd',l:'OPD fitted',s:'Crush protection'},{id:'throttle',l:'Throttle',s:'Returns to idle'},{id:'leaks',l:'No leaks',s:'Check underneath'}]},
-  'Chainsaw':{icon:'🪚',checks:[{id:'fuel',l:'Fuel & bar oil',s:'Both filled'},{id:'chain',l:'Chain',s:'Sharp, correct tension'},{id:'brake',l:'Chain brake',s:'Activates correctly'},{id:'guard',l:'Hand guard',s:'Fitted and intact'},{id:'stop',l:'Stop switch',s:'Stops chain'},{id:'ppe',l:'PPE worn',s:'Chaps, gloves, helmet'}]},
-  'Other':{icon:'⚙️',checks:[{id:'fluids',l:'Fluid levels',s:'As applicable'},{id:'fuel',l:'Fuel',s:'Adequate'},{id:'tyres',l:'Tyres/tracks',s:'Condition'},{id:'lights',l:'Lights',s:'Working'},{id:'brakes',l:'Brakes',s:'Functional'},{id:'safety',l:'Safety devices',s:'Guards, ROPS, belt'},{id:'leaks',l:'No leaks',s:'Check underneath'}]}
-};
-
-var BIOSEC=[
-  {id:'other_farms',q:'Visited other farms or saleyards in last 48 hours?',s:'Feedlots, abattoirs, piggeries',risk:true},
-  {id:'livestock',q:'Direct contact with livestock in last 48 hours?',s:'Cattle, sheep, pigs, poultry',risk:true},
-  {id:'overseas',q:'Returned from overseas in last 30 days?',s:'Exotic disease risk — FMD',risk:true},
-  {id:'sick',q:'Aware of sick animals at recently visited properties?',s:'Unexplained deaths or illness',risk:true},
-  {id:'footwear',q:'Footwear and clothing clean of mud and manure?',s:'Or changed before arrival',risk:false},
-  {id:'vehicle',q:'Vehicle clean of mud and manure?',s:'Wheel arches and undercarriage',risk:false},
-  {id:'animals',q:'Bringing animals or animal products onto property?',s:'Food, feed, samples',risk:true}
-];
-
-var VTYPES=['Visitor / Guest','Contractor','Delivery / Transport','Veterinarian','Government Inspector','Agronomist','Truck Driver','Other'];
-
-var S={
-  session:JSON.parse(localStorage.getItem('ff_sess')||'null'),
-  farm:null,member:null,members:[],equipment:[],
-  shedRecs:[],chemRecs:[],preRecs:[],visRecs:[],
-  page:'home',modal:null,
-  authMode:'login',authError:'',
-  coPhoto:null,coStream:null,
-  ciPhoto:null,ciStream:null,
-  chemPhoto:null,chemStream:null,
-  prePhoto:null,preStream:null,
-  selVehicle:null,checkResults:{},
-  biosecAns:{},sigData:null,sigDrawing:false,
-  rptFrom:'',rptTo:'',rptMods:{shed:true,chem:true,pre:true,vis:true},
-  rptData:null,rptGen:false,rptDone:false,
-  // sub-pages
-  subpage:null
-};
-var n2=new Date();var fr=new Date();fr.setDate(fr.getDate()-90);
-S.rptFrom=fr.toISOString().slice(0,10);S.rptTo=n2.toISOString().slice(0,10);
-
-function tok(){return S.session?S.session.access_token:'';}
-async function api(path,opts){
-  opts=opts||{};
-  var h={'apikey':SB_KEY,'Authorization':'Bearer '+tok(),'Content-Type':'application/json','Prefer':'return=representation'};
-  Object.assign(h,opts.headers||{});
-  var res=await fetch(SB_URL+'/rest/v1/'+path,{headers:h,method:opts.method||'GET',body:opts.body});
-  if(res.status===204)return null;
-  var data=await res.json();
-  if(!res.ok)throw new Error(data.message||data.error_description||'Error');
-  return data;
-}
-async function authApi(path,body){
-  var res=await fetch(SB_URL+'/auth/v1/'+path,{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
-  var data=await res.json();
-  if(data.error||data.error_description)throw new Error(data.error_description||data.error||data.msg);
-  return data;
-}
-
-function toast(msg,type){
-  type=type||'success';
-  var el=document.createElement('div');el.className='toast '+type;el.textContent=msg;
-  document.getElementById('toasts').appendChild(el);
-  setTimeout(function(){el.remove();},3500);
-}
-
-function fmt(iso){if(!iso)return'—';return new Date(iso).toLocaleString('en-AU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});}
-function fmtD(iso){if(!iso)return'—';return new Date(iso).toLocaleDateString('en-AU',{day:'2-digit',month:'short',year:'numeric'});}
-function getV(id){var el=document.getElementById(id);return el?el.value:'';}
-function dur(a,b){if(!a||!b)return'—';var m=Math.round((new Date(b)-new Date(a))/60000);return m<60?m+' min':Math.floor(m/60)+'h '+(m%60)+'m';}
-function inRange(iso,f,t){if(!iso)return false;var d=new Date(iso);return d>=new Date(f)&&d<=new Date(t+'T23:59:59');}
-function biosecRisk(ans){return['other_farms','livestock','overseas','sick','animals'].some(function(id){return ans[id]==='yes';})||['footwear','vehicle'].some(function(id){return ans[id]==='no';});}
-function whpStatus(r){
-  if(!r.withholding_days||r.withholding_days===0)return{label:'No WHP',cls:'badge-clear',pct:0};
-  var cd=new Date(new Date(r.applied_at).getTime()+r.withholding_days*86400000);
-  var now=new Date();
-  if(now>=cd)return{label:'Cleared',cls:'badge-clear',pct:100,cd:cd};
-  var pct=Math.round(((now-new Date(r.applied_at))/(cd-new Date(r.applied_at)))*100);
-  var days=Math.ceil((cd-now)/86400000);
-  return{label:days+' days left',cls:'badge-whp',pct:pct,cd:cd,days:days};
-}
-
-async function loadCtx(uid){
-  var res=await api('farm_members?user_id=eq.'+uid+'&select=*,farms(*)');
-  if(res&&res.length){S.member=res[0];S.farm=res[0].farms;}
-}
-async function loadAll(){
-  if(!S.farm)return;
-  var id=S.farm.id;
-  var res=await Promise.all([
-    api('shed_records?farm_id=eq.'+id+'&order=checkout_at.desc'),
-    api('chemical_records?farm_id=eq.'+id+'&order=applied_at.desc'),
-    api('prestart_records?farm_id=eq.'+id+'&order=checked_at.desc'),
-    api('visitor_records?farm_id=eq.'+id+'&order=signed_in_at.desc'),
-    api('farm_members?farm_id=eq.'+id),
-    api('equipment?farm_id=eq.'+id+'&active=eq.true&order=name')
-  ].map(function(p){return p.catch(function(){return[];})}));
-  S.shedRecs=res[0]||[];S.chemRecs=res[1]||[];S.preRecs=res[2]||[];S.visRecs=res[3]||[];
-  S.members=res[4]||[];S.equipment=res[5]||[];
-}
-
-async function doSignIn(email,pw){
-  var data=await authApi('token?grant_type=password',{email:email,password:pw});
-  S.session=data;localStorage.setItem('ff_sess',JSON.stringify(data));
-  await loadCtx(data.user.id);
-}
-async function doSignUp(email,pw,name,farmName){
-  var data=await authApi('signup',{email:email,password:pw});
-  S.session=data.session||data;localStorage.setItem('ff_sess',JSON.stringify(S.session));
-  var t=(data.session||data).access_token;
-  var uid=data.user?data.user.id:(data.session?data.session.user.id:null);
-  var h={'apikey':SB_KEY,'Authorization':'Bearer '+t,'Content-Type':'application/json','Prefer':'return=representation'};
-  var fr2=await fetch(SB_URL+'/rest/v1/farms',{method:'POST',headers:h,body:JSON.stringify({name:farmName,owner_id:uid})});
-  var farms=await fr2.json();var farm=farms[0];
-  var mr=await fetch(SB_URL+'/rest/v1/farm_members',{method:'POST',headers:h,body:JSON.stringify({farm_id:farm.id,user_id:uid,display_name:name,role:'owner'})});
-  var mems=await mr.json();S.farm=farm;S.member=mems[0];
-  await fetch(SB_URL+'/rest/v1/equipment',{method:'POST',headers:h,body:JSON.stringify([
-    {farm_id:farm.id,name:'Shovel',category:'Hand Tools'},{farm_id:farm.id,name:'Wire Strainer',category:'Fencing'},
-    {farm_id:farm.id,name:'Chainsaw',category:'Power Tools'},{farm_id:farm.id,name:'Forklift',category:'Machinery'},
-    {farm_id:farm.id,name:'Tractor',category:'Machinery'},{farm_id:farm.id,name:'Spray Pack',category:'Chemicals / Fuel'},
-    {farm_id:farm.id,name:'Generator',category:'Power Tools'},{farm_id:farm.id,name:'Jerry Can - Diesel',category:'Chemicals / Fuel'}
-  ])});
-}
-function doSignOut(){localStorage.removeItem('ff_sess');S.session=null;S.farm=null;S.member=null;S.shedRecs=[];S.chemRecs=[];S.preRecs=[];S.visRecs=[];S.members=[];S.equipment=[];render();}
-
-async function startCam(prefix){
-  try{
-    var stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280},height:{ideal:720}}});
-    S[prefix+'Stream']=stream;
-    var vid=document.getElementById(prefix+'-vid');
-    vid.srcObject=stream;vid.style.display='block';
-    document.getElementById(prefix+'-ph').style.display='none';
-    document.getElementById(prefix+'-cap').disabled=false;
-  }catch(e){toast('Camera not available','error');}
-}
-function captureCam(prefix){
-  var vid=document.getElementById(prefix+'-vid');
-  var c=document.createElement('canvas');c.width=vid.videoWidth||1280;c.height=vid.videoHeight||720;
-  var ctx=c.getContext('2d');ctx.drawImage(vid,0,0);
-  var now=new Date();
-  ctx.fillStyle='rgba(10,34,56,.7)';ctx.fillRect(0,c.height-44,c.width,44);
-  ctx.fillStyle='#e8b84b';ctx.font='bold 18px monospace';
-  ctx.fillText((S.farm?S.farm.name:'Farm')+' · '+now.toLocaleString('en-AU'),12,c.height-14);
-  var stream=S[prefix+'Stream'];if(stream)stream.getTracks().forEach(function(t){t.stop();});
-  S[prefix+'Stream']=null;
-  S[prefix+'Photo']={dataUrl:c.toDataURL('image/jpeg',.85),ts:now.toLocaleString('en-AU')};
-  render();
-}
-function retakeCam(prefix){S[prefix+'Photo']=null;render();}
-
-function camWidget(prefix,label){
-  var photo=S[prefix+'Photo'];
-  return '<div class="form-group"><label>'+label+'</label>'+
-    '<div class="cam-box">'+
-    '<div class="cam-ph" id="'+prefix+'-ph"'+(photo?' style="display:none"':'')+'>'+
-    '<span class="cam-icon">📷</span><span class="cam-text">Tap to start camera</span></div>'+
-    '<video id="'+prefix+'-vid" autoplay playsinline style="display:none;"></video>'+
-    (photo?'<img class="preview" src="'+photo.dataUrl+'"><div class="cam-ts">'+photo.ts+'</div>':'')+
-    '</div>'+
-    '<div class="cam-controls">'+
-    (!photo?
-      '<button type="button" class="btn btn-ghost btn-sm" onclick="startCam(\''+prefix+'\')">▶ Start Camera</button>'+
-      '<button type="button" class="btn btn-primary btn-sm" id="'+prefix+'-cap" onclick="captureCam(\''+prefix+'\')" disabled>📸 Snap</button>':
-      '<button type="button" class="btn btn-ghost btn-sm" onclick="retakeCam(\''+prefix+'\')">↩ Retake</button>')+
-    '</div></div>';
-}
-
-function initSig(){
-  var c=document.getElementById('sig-pad');if(!c)return;
-  var ctx=c.getContext('2d');ctx.strokeStyle='#0a2238';ctx.lineWidth=3;ctx.lineCap='round';ctx.lineJoin='round';
-  function pos(e){var r=c.getBoundingClientRect();var s=e.touches?e.touches[0]:e;return{x:s.clientX-r.left,y:s.clientY-r.top};}
-  c.addEventListener('mousedown',function(e){S.sigDrawing=true;var p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
-  c.addEventListener('mousemove',function(e){if(!S.sigDrawing)return;var p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
-  c.addEventListener('mouseup',function(){S.sigDrawing=false;S.sigData=c.toDataURL();});
-  c.addEventListener('touchstart',function(e){e.preventDefault();S.sigDrawing=true;var p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);});
-  c.addEventListener('touchmove',function(e){e.preventDefault();if(!S.sigDrawing)return;var p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();});
-  c.addEventListener('touchend',function(){S.sigDrawing=false;S.sigData=document.getElementById('sig-pad').toDataURL();});
-}
-function clearSig(){var c=document.getElementById('sig-pad');if(c){c.getContext('2d').clearRect(0,0,c.width,c.height);S.sigData=null;}}
-
-function render(){
-  var root=document.getElementById('root');
-  if(!S.session||!S.farm){root.innerHTML=authPage();return;}
-  root.innerHTML=appShell();
-  startClock();
-  setTimeout(initSig,100);
-}
-
-function startClock(){
-  var el=document.getElementById('clock');if(!el)return;
-  function tick(){
-    if(!document.getElementById('clock'))return;
-    var n=new Date();
-    el.querySelector('.time').textContent=n.toLocaleTimeString('en-AU');
-    el.querySelector('.date').textContent=n.toLocaleDateString('en-AU',{weekday:'short',day:'2-digit',month:'short'});
-    setTimeout(tick,1000);
-  }tick();
-}
-
-function authPage(){
-  var isUp=S.authMode==='signup';
-  return '<div class="auth-wrap">'+
-    '<div class="auth-hero">'+
-    '<div style="width:72px;height:72px;background:var(--wheat);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;margin:0 auto 16px;">🌾</div>'+
-    '<div style="font-family:\'DM Serif Display\',serif;font-size:2rem;color:white;line-height:1.2;margin-bottom:8px;">The Farmer\'s<br>Friend</div>'+
-    '<div style="font-size:.9rem;color:var(--sky-mid);">Farm compliance — built for Australian farmers</div>'+
-    '</div>'+
-    '<div class="auth-card">'+
-    '<div style="display:flex;background:var(--off-white);border-radius:14px;padding:3px;margin-bottom:22px;">'+
-    '<button onclick="S.authMode=\'login\';S.authError=\'\';render()" style="flex:1;padding:11px;border:none;cursor:pointer;border-radius:12px;background:'+(!isUp?'white':'none')+';color:'+(!isUp?'var(--sky-dark)':'var(--slate)')+';font-family:\'DM Sans\';font-weight:700;font-size:.95rem;transition:all .15s;">Sign In</button>'+
-    '<button onclick="S.authMode=\'signup\';S.authError=\'\';render()" style="flex:1;padding:11px;border:none;cursor:pointer;border-radius:12px;background:'+(isUp?'white':'none')+';color:'+(isUp?'var(--sky-dark)':'var(--slate)')+';font-family:\'DM Sans\';font-weight:700;font-size:.95rem;transition:all .15s;">New Farm</button>'+
-    '</div>'+
-    '<form id="auth-form" style="display:flex;flex-direction:column;gap:14px;">'+
-    (isUp?'<div class="form-group"><label>Farm Name</label><input name="farmName" placeholder="e.g. Barker Grazing Co." required></div>'+
-    '<div class="form-group"><label>Your Name</label><input name="displayName" placeholder="e.g. James Meggitt" required></div>':'')+
-    '<div class="form-group"><label>Email</label><input type="email" name="email" placeholder="you@farm.com.au" required autocomplete="email"></div>'+
-    '<div class="form-group"><label>Password</label><input type="password" name="password" placeholder="Min. 6 characters" required minlength="6" autocomplete="'+(isUp?'new':'current')+'-password"></div>'+
-    (S.authError?'<div class="error-msg">⚠ '+S.authError+'</div>':'')+
-    '<button type="submit" class="btn btn-wheat">'+(isUp?'Create My Farm':'Sign In')+'</button>'+
-    '</form>'+
-    '</div></div>';
-}
-
-function appShell(){
-  var now=new Date();
-  var outCount=S.shedRecs.filter(function(r){return r.status==='out';}).length;
-  var onsiteCount=S.visRecs.filter(function(r){return r.status==='on-site';}).length;
-  var overdueCount=S.shedRecs.filter(function(r){return r.status==='out'&&r.expected_return_at&&new Date(r.expected_return_at)<now;}).length;
-  var preFailCount=S.preRecs.filter(function(r){return r.overall_result==='fail';}).length;
-
-  var navItems=[
-    {id:'home',icon:'📊',label:'Dashboard'},
-    {id:'shed',icon:'🏚️',label:'Shed',badge:overdueCount},
-    {id:'chem',icon:'🧪',label:'Chemicals'},
-    {id:'pre',icon:'🚜',label:'Pre-starts',badge:preFailCount},
-    {id:'vis',icon:'👤',label:'Visitors',badge:onsiteCount},
-    {id:'report',icon:'📄',label:'Report'}
-  ];
-
-  var nav=navItems.map(function(n){
-    return '<button class="nav-btn'+(S.page===n.id?' active':'')+'" onclick="goPage(\''+n.id+'\')">'+
-      '<span class="nav-icon">'+n.icon+'</span>'+n.label+
-      (n.badge?'<span class="nav-badge">'+n.badge+'</span>':'')+
-      '</button>';
-  }).join('');
-
-  var content='';
-  if(S.page==='home')content=homePage(now,outCount,onsiteCount,overdueCount);
-  else if(S.page==='shed')content=shedPage();
-  else if(S.page==='chem')content=chemPage();
-  else if(S.page==='pre')content=prePage();
-  else if(S.page==='vis')content=visPage();
-  else if(S.page==='report')content=reportPage();
-
-  return '<div id="app">'+
-    '<div class="top-bar">'+
-    '<div class="logo">🌾</div>'+
-    '<div><div class="title">The Farmer\'s Friend</div><div class="farm">'+(S.farm?S.farm.name:'')+'</div></div>'+
-    '<div class="clock" id="clock"><div class="time"></div><div class="date"></div></div>'+
-    '</div>'+
-    '<div class="page-wrap">'+content+'</div>'+
-    '<nav class="bottom-nav">'+nav+'</nav>'+
-    '</div>'+
-    (S.modal?sheetHTML():'');
-}
-
-// ── HOME ──────────────────────────────────────────────────────────────────
-function homePage(now,outCount,onsiteCount,overdueCount){
-  var todayStr=now.toDateString();
-  var retToday=S.shedRecs.filter(function(r){return r.return_at&&new Date(r.return_at).toDateString()===todayStr;}).length;
-  var chemWhp=S.chemRecs.filter(function(r){if(!r.withholding_days)return false;return now<new Date(new Date(r.applied_at).getTime()+r.withholding_days*86400000);}).length;
-
-  return '<div class="page">'+
-    (overdueCount>0?'<div class="alert"><strong>⚠ '+overdueCount+' overdue item'+(overdueCount!==1?'s':'')+'</strong>Check Shed module to see what\'s overdue.</div>':'')+
-    '<div class="stats-grid">'+
-    '<div class="stat-card" style="border-top-color:var(--danger)"><div class="stat-num" style="color:var(--danger)">'+outCount+'</div><div class="stat-label">Items Out</div></div>'+
-    '<div class="stat-card" style="border-top-color:var(--grass)"><div class="stat-num" style="color:var(--grass)">'+onsiteCount+'</div><div class="stat-label">On Site</div></div>'+
-    '<div class="stat-card" style="border-top-color:var(--orange)"><div class="stat-num" style="color:var(--orange)">'+chemWhp+'</div><div class="stat-label">Active WHPs</div></div>'+
-    '<div class="stat-card" style="border-top-color:var(--wheat-dark)"><div class="stat-num" style="color:var(--wheat-dark)">'+retToday+'</div><div class="stat-label">Returned Today</div></div>'+
-    '</div>'+
-    '<div class="section-title">Quick Actions</div>'+
-    '<div class="action-grid">'+
-    '<div class="action-btn primary" onclick="goPage(\'shed\',\'checkout\')"><span class="icon">🔓</span><span class="label">Check Out Item</span></div>'+
-    '<div class="action-btn success" onclick="goPage(\'shed\',\'checkin\')"><span class="icon">🔒</span><span class="label">Return Item</span></div>'+
-    '<div class="action-btn" onclick="goPage(\'chem\',\'add\')"><span class="icon">🧪</span><span class="label">Log Chemical</span></div>'+
-    '<div class="action-btn" onclick="goPage(\'pre\',\'add\')"><span class="icon">✅</span><span class="label">Pre-start Check</span></div>'+
-    '<div class="action-btn" onclick="goPage(\'vis\',\'signin\')"><span class="icon">👤</span><span class="label">Sign In Visitor</span></div>'+
-    '<div class="action-btn" onclick="goPage(\'report\')"><span class="icon">📄</span><span class="label">Gen Report</span></div>'+
-    '</div>'+
-    '<div class="section-title">Currently Out of Shed</div>'+
-    (S.shedRecs.filter(function(r){return r.status==='out';}).length===0?
-    '<div class="empty"><span class="icon">✅</span><p>All clear — nothing out!</p></div>':
-    S.shedRecs.filter(function(r){return r.status==='out';}).slice(0,5).map(function(r){
-      var od=r.expected_return_at&&new Date(r.expected_return_at)<now;
-      return'<div class="list-item '+(od?'danger-left':'success-left')+'" onclick="S.modal={type:\'shed\',rec:S.shedRecs.find(function(x){return x.id===\''+r.id+'\'})};render()">'+
-        '<span class="item-icon">🔓</span>'+
-        '<div class="item-body"><div class="item-title">'+r.item_name+'</div>'+
-        '<div class="item-sub">'+r.checkout_by_name+(r.destination?' → '+r.destination:'')+'</div></div>'+
-        '<div class="item-right">'+(od?'<span class="badge badge-overdue">Overdue</span>':'<span class="badge badge-out">Out</span>')+'</div></div>';
-    }).join(''))+
-    '<div style="height:8px;"></div>'+
-    '</div>';
-}
-
-// ── SHED ──────────────────────────────────────────────────────────────────
-function shedPage(){
-  var sub=S.subpage||'log';
-  if(sub==='checkout')return shedCheckout();
-  if(sub==='checkin')return shedCheckin();
-  return shedLog();
-}
-
-function shedCheckout(){
-  var mOpts=S.members.map(function(m){return'<option value="'+m.id+'">'+m.display_name+'</option>';}).join('');
-  var eqList=S.equipment.map(function(e){return'<option value="'+e.name+'">';}).join('');
-  var catOpts=['Hand Tools','Power Tools','Machinery','Animal Products','Chemicals / Fuel','Fencing','Safety Equipment','Other'].map(function(c){return'<option>'+c+'</option>';}).join('');
-  var def=new Date();def.setHours(def.getHours()+4);
-  return'<div class="page">'+
-    '<div class="card">'+
-    '<div class="card-title">🔓 Check Out Item</div>'+
-    '<div class="form-group"><label>Who is taking it? *</label><select id="co-mem" required><option value="">-- Select employee --</option>'+mOpts+'</select></div>'+
-    '<div class="form-group"><label>Item Name *</label><input id="co-item" placeholder="e.g. Wire Strainer" required list="eq-dl"><datalist id="eq-dl">'+eqList+'</datalist></div>'+
-    '<div class="form-group"><label>Category</label><select id="co-cat"><option value="">-- Select --</option>'+catOpts+'</select></div>'+
-    '<div class="form-group"><label>Destination / Job</label><input id="co-dest" placeholder="e.g. North Paddock — fence repair"></div>'+
-    '<div class="form-group"><label>Expected Return</label><input id="co-ret" type="datetime-local" value="'+def.toISOString().slice(0,16)+'"></div>'+
-    '<div class="form-group"><label>Notes</label><textarea id="co-notes" placeholder="Condition, instructions..."></textarea></div>'+
-    camWidget('co','📷 Photo — Item Being Taken')+
-    '<div style="height:14px;"></div>'+
-    '<button class="btn btn-primary" onclick="submitCheckout()">🔓 Log Checkout</button>'+
-    '<button class="btn btn-ghost" style="margin-top:10px;" onclick="S.subpage=\'log\';S.coPhoto=null;render()">Cancel</button>'+
-    '</div></div>';
-}
-
-async function submitCheckout(){
-  var memId=getV('co-mem');var item=getV('co-item');
-  if(!item){toast('Item name required','error');return;}
-  if(!memId){toast('Select who is taking it','error');return;}
-  var mem=S.members.find(function(m){return m.id===memId;});
-  var ret=getV('co-ret');
-  try{
-    await api('shed_records',{method:'POST',body:JSON.stringify({
-      farm_id:S.farm.id,item_name:item,category:getV('co-cat')||null,
-      quantity:1,destination:getV('co-dest')||null,checkout_notes:getV('co-notes')||null,
-      checkout_by:memId,checkout_by_name:mem?mem.display_name:'Unknown',
-      checkout_at:new Date().toISOString(),
-      expected_return_at:ret?new Date(ret).toISOString():null,status:'out'
-    })});
-    toast('✓ '+item+' checked out');S.coPhoto=null;S.subpage='log';await loadAll();render();
-  }catch(e){toast(e.message,'error');}
-}
-
-function shedCheckin(){
-  var out=S.shedRecs.filter(function(r){return r.status==='out';});
-  if(!out.length)return'<div class="page"><div class="empty"><span class="icon">✅</span><p>Nothing out — all clear!</p></div></div>';
-  var now=new Date();
-  var recOpts=out.map(function(r){var od=r.expected_return_at&&new Date(r.expected_return_at)<now;return'<option value="'+r.id+'">'+(od?'⚠ ':'')+r.item_name+' — '+r.checkout_by_name+'</option>';}).join('');
-  var mOpts=S.members.map(function(m){return'<option value="'+m.id+'">'+m.display_name+'</option>';}).join('');
-  var conds=['Good — no issues','Minor wear / dirty','Needs maintenance','Damaged — report raised'].map(function(c){return'<option>'+c+'</option>';}).join('');
-  return'<div class="page"><div class="card">'+
-    '<div class="card-title">🔒 Return Item</div>'+
-    '<div class="form-group"><label>Item Being Returned</label><select id="ci-rec" required><option value="">-- Select ('+out.length+' out) --</option>'+recOpts+'</select></div>'+
-    '<div class="form-group"><label>Returned By *</label><select id="ci-mem" required><option value="">-- Select --</option>'+mOpts+'</select></div>'+
-    '<div class="form-group"><label>Condition</label><select id="ci-cond">'+conds+'</select></div>'+
-    '<div class="form-group"><label>Return Notes</label><textarea id="ci-notes" placeholder="Any issues?"></textarea></div>'+
-    camWidget('ci','📷 Photo — Item Returned')+
-    '<div style="height:14px;"></div>'+
-    '<button class="btn btn-success" onclick="submitCheckin()">🔒 Log Return</button>'+
-    '<button class="btn btn-ghost" style="margin-top:10px;" onclick="S.subpage=\'log\';S.ciPhoto=null;render()">Cancel</button>'+
-    '</div></div>';
-}
-
-async function submitCheckin(){
-  var recId=getV('ci-rec');var memId=getV('ci-mem');
-  if(!recId){toast('Select the item','error');return;}
-  if(!memId){toast('Select who is returning it','error');return;}
-  var mem=S.members.find(function(m){return m.id===memId;});
-  var rec=S.shedRecs.find(function(r){return r.id===recId;});
-  try{
-    await api('shed_records?id=eq.'+recId,{method:'PATCH',body:JSON.stringify({
-      status:'returned',return_at:new Date().toISOString(),
-      return_by:memId,return_by_name:mem?mem.display_name:'Unknown',
-      condition_on_return:getV('ci-cond'),return_notes:getV('ci-notes')||null
-    })});
-    toast('✓ '+(rec?rec.item_name:'Item')+' returned');S.ciPhoto=null;S.subpage='log';await loadAll();render();
-  }catch(e){toast(e.message,'error');}
-}
-
-function shedLog(){
-  var now=new Date();
-  return'<div class="page">'+
-    '<div style="display:flex;gap:10px;margin-bottom:4px;">'+
-    '<button class="btn btn-primary btn-sm" onclick="S.subpage=\'checkout\';render()">🔓 Check Out</button>'+
-    '<button class="btn btn-success btn-sm" onclick="S.subpage=\'checkin\';render()">🔒 Return</button>'+
-    '</div>'+
-    (S.shedRecs.length===0?'<div class="empty"><span class="icon">🏚️</span><p>No records yet</p></div>':
-    S.shedRecs.slice(0,30).map(function(r){
-      var od=r.status==='out'&&r.expected_return_at&&new Date(r.expected_return_at)<now;
-      return'<div class="list-item '+(r.status==='out'?(od?'danger-left':'warn-left'):'success-left')+'" onclick="S.modal={type:\'shed\',rec:S.shedRecs.find(function(x){return x.id===\''+r.id+'\'})};render()">'+
-        '<span class="item-icon">'+(r.status==='out'?'🔓':'🔒')+'</span>'+
-        '<div class="item-body"><div class="item-title">'+r.item_name+'</div>'+
-        '<div class="item-sub">'+r.checkout_by_name+' · '+fmt(r.checkout_at)+'</div></div>'+
-        '<div class="item-right">'+(r.status==='out'?(od?'<span class="badge badge-overdue">Overdue</span>':'<span class="badge badge-out">Out</span>'):'<span class="badge badge-in">Back</span>')+'</div></div>';
-    }).join(''))+
-    '</div>';
-}
-
-// ── CHEMICALS ─────────────────────────────────────────────────────────────
-function chemPage(){
-  var sub=S.subpage||'log';
-  if(sub==='add')return chemAdd();
-  return chemLog();
-}
-
-function chemAdd(){
-  var mOpts=S.members.map(function(m){return'<option value="'+m.id+'">'+m.display_name+'</option>';}).join('');
-  var def=new Date().toISOString().slice(0,16);
-  var methods=['Boom spray','Spot spray','Aerial','Hand spray','Granular spread','Other'].map(function(m){return'<option>'+m+'</option>';}).join('');
-  var dirs=['N','NE','E','SE','S','SW','W','NW','Variable','Calm'].map(function(d){return'<option>'+d+'</option>';}).join('');
-  return'<div class="page"><div class="card">'+
-    '<div class="card-title">🧪 Log Chemical Application</div>'+
-    '<div class="section-title">Chemical</div>'+
-    '<div class="form-group"><label>Product Name *</label><input id="ch-name" placeholder="e.g. Roundup PowerMAX" required list="ch-dl"><datalist id="ch-dl"><option value="Roundup PowerMAX"><option value="Gramoxone"><option value="Lorsban"><option value="Karate Zeon"><option value="Glyphosate 450"><option value="2,4-D Amine"><option value="Atrazine"></datalist></div>'+
-    '<div class="form-group"><label>APVMA Number</label><input id="ch-apvma" placeholder="e.g. 56848"></div>'+
-    '<div class="form-group"><label>Crop / Target</label><input id="ch-crop" placeholder="e.g. Wheat, Pasture, Fence line"></div>'+
-    '<div class="section-title">Application</div>'+
-    '<div class="form-group"><label>Paddock / Location *</label><input id="ch-paddock" placeholder="e.g. North Paddock" required></div>'+
-    '<div class="form-group"><label>Area Treated (ha)</label><input id="ch-area" type="number" min="0" step=".1" placeholder="e.g. 12.5"></div>'+
-    '<div class="form-group"><label>Application Rate</label><input id="ch-rate" placeholder="e.g. 1.5 L/ha"></div>'+
-    '<div class="form-group"><label>Method</label><select id="ch-method"><option value="">-- Select --</option>'+methods+'</select></div>'+
-    '<div class="form-group"><label>Date & Time Applied</label><input id="ch-applied" type="datetime-local" value="'+def+'"></div>'+
-    '<div class="section-title">Operator</div>'+
-    '<div class="form-group"><label>Operator *</label><select id="ch-op" required><option value="">-- Select --</option>'+mOpts+'</select></div>'+
-    '<div class="form-group"><label>Chemical Licence No.</label><input id="ch-lic" placeholder="e.g. CL-123456"></div>'+
-    '<div class="section-title">Weather</div>'+
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'+
-    '<div class="form-group"><label>Wind (km/h)</label><input id="ch-wind" type="number" min="0" placeholder="e.g. 8"></div>'+
-    '<div class="form-group"><label>Direction</label><select id="ch-dir"><option value="">--</option>'+dirs+'</select></div>'+
-    '<div class="form-group"><label>Temp (°C)</label><input id="ch-temp" type="number" placeholder="e.g. 22"></div>'+
-    '</div>'+
-    '<div class="section-title">Withholding Period</div>'+
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'+
-    '<div class="form-group"><label>WHP (days)</label><input id="ch-whp" type="number" min="0" placeholder="Check label"></div>'+
-    '<div class="form-group"><label>Re-entry (hrs)</label><input id="ch-reentry" type="number" min="0" placeholder="e.g. 4"></div>'+
-    '</div>'+
-    '<div class="form-group"><label>Notes</label><textarea id="ch-notes" placeholder="Any additional notes..."></textarea></div>'+
-    camWidget('chem','📷 Photo — Chemical Label')+
-    '<div style="height:14px;"></div>'+
-    '<button class="btn btn-primary" onclick="submitChem()">🧪 Log Application</button>'+
-    '<button class="btn btn-ghost" style="margin-top:10px;" onclick="S.subpage=\'log\';S.chemPhoto=null;render()">Cancel</button>'+
-    '</div></div>';
-}
-
-async function submitChem(){
-  var name=getV('ch-name');var paddock=getV('ch-paddock');var opId=getV('ch-op');
-  if(!name){toast('Chemical name required','error');return;}
-  if(!paddock){toast('Paddock required','error');return;}
-  if(!opId){toast('Select operator','error');return;}
-  var op=S.members.find(function(m){return m.id===opId;});
-  var applied=getV('ch-applied')||new Date().toISOString().slice(0,16);
-  try{
-    await api('chemical_records',{method:'POST',body:JSON.stringify({
-      farm_id:S.farm.id,chemical_name:name,apvma_number:getV('ch-apvma')||null,
-      crop_or_target:getV('ch-crop')||null,paddock:paddock,
-      area_treated_ha:parseFloat(getV('ch-area'))||null,application_rate:getV('ch-rate')||null,
-      application_method:getV('ch-method')||null,
-      operator_id:opId,operator_name:op?op.display_name:'Unknown',
-      operator_licence:getV('ch-lic')||null,
-      applied_at:new Date(applied).toISOString(),
-      wind_speed_kmh:parseFloat(getV('ch-wind'))||null,wind_direction:getV('ch-dir')||null,
-      temperature_c:parseFloat(getV('ch-temp'))||null,
-      withholding_days:parseInt(getV('ch-whp'))||0,reentry_hours:parseInt(getV('ch-reentry'))||0,
-      notes:getV('ch-notes')||null
-    })});
-    toast('✓ Chemical application logged');S.chemPhoto=null;S.subpage='log';await loadAll();render();
-  }catch(e){toast(e.message,'error');}
-}
-
-function chemLog(){
-  var now=new Date();
-  return'<div class="page">'+
-    '<button class="btn btn-primary btn-sm" style="width:auto;margin-bottom:14px;" onclick="S.subpage=\'add\';render()">🧪 Log Application</button>'+
-    (S.chemRecs.length===0?'<div class="empty"><span class="icon">🧪</span><p>No chemical records yet</p></div>':
-    S.chemRecs.slice(0,30).map(function(r){
-      var s=whpStatus(r);
-      return'<div class="list-item" onclick="S.modal={type:\'chem\',rec:S.chemRecs.find(function(x){return x.id===\''+r.id+'\'})};render()">'+
-        '<span class="item-icon">🧪</span>'+
-        '<div class="item-body"><div class="item-title">'+r.chemical_name+'</div>'+
-        '<div class="item-sub">'+r.paddock+' · '+r.operator_name+' · '+fmt(r.applied_at)+'</div>'+
-        (s.pct>0&&s.pct<100?'<div class="whp-bar" style="width:100px;margin-top:6px;"><div class="whp-fill" style="width:'+s.pct+'%;background:'+(s.pct>70?'var(--grass)':s.pct>40?'var(--wheat)':'var(--orange)')+'"></div></div>':'')+'</div>'+
-        '<div class="item-right"><span class="badge '+s.cls+'">'+s.label+'</span></div></div>';
-    }).join(''))+
-    '</div>';
-}
-
-// ── PRE-STARTS ────────────────────────────────────────────────────────────
-function prePage(){
-  var sub=S.subpage||'log';
-  if(sub==='add')return preAdd();
-  return preLog();
-}
-
-function preAdd(){
-  if(!S.selVehicle){
-    return'<div class="page"><div class="card">'+
-      '<div class="card-title">🚜 Select Vehicle Type</div>'+
-      '<div class="veh-grid">'+
-      Object.keys(VEHICLES).map(function(type){var v=VEHICLES[type];return'<div class="veh-card" onclick="S.selVehicle=\''+type+'\';S.checkResults={};render()">'+
-        '<span class="vicon">'+v.icon+'</span>'+
-        '<span class="vname">'+type+'</span>'+
-        '<span class="vcount">'+v.checks.length+' checks</span></div>';}).join('')+
-      '</div></div></div>';
-  }
-  var vt=VEHICLES[S.selVehicle];
-  var mOpts=S.members.map(function(m){return'<option value="'+m.id+'">'+m.display_name+'</option>';}).join('');
-  var hasFail=Object.values(S.checkResults).indexOf('fail')!==-1;
-  var answered=Object.keys(S.checkResults).length;
-  var pct=vt.checks.length>0?Math.round((answered/vt.checks.length)*100):0;
-
-  return'<div class="page"><div class="card">'+
-    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);">'+
-    '<span style="font-size:2rem;">'+vt.icon+'</span>'+
-    '<div><div style="font-family:\'DM Serif Display\',serif;font-size:1.1rem;color:var(--sky-dark);">'+S.selVehicle+'</div>'+
-    '<div style="font-size:.78rem;color:var(--slate);">'+answered+' of '+vt.checks.length+' completed</div></div>'+
-    '<button class="btn btn-ghost btn-sm" style="margin-left:auto;" onclick="S.selVehicle=null;S.checkResults={};render()">← Back</button></div>'+
-    (hasFail?'<div class="alert" style="margin-bottom:14px;"><strong>⚠ Defects recorded</strong>Vehicle should NOT be used until repaired!</div>':'')+
-    '<div style="background:var(--border);height:8px;border-radius:4px;margin-bottom:18px;"><div style="height:100%;border-radius:4px;background:'+(hasFail?'var(--danger)':'var(--grass)')+';width:'+pct+'%;transition:width .3s;"></div></div>'+
-    '<div class="form-group"><label>Vehicle Name / ID *</label><input id="pre-name" placeholder="e.g. Red Massey, Forklift #2"></div>'+
-    '<div class="form-group"><label>Operator *</label><select id="pre-op"><option value="">-- Select --</option>'+mOpts+'</select></div>'+
-    '<div class="section-title">Checklist</div>'+
-    vt.checks.map(function(c){
-      var res=S.checkResults[c.id]||'';
-      return'<div class="check-item '+(res==='pass'?'pass':res==='fail'?'fail':'')+'">'+
-        '<div class="check-label">'+c.l+'</div>'+
-        '<div class="check-sub">'+c.s+'</div>'+
-        (res==='fail'?'<input placeholder="Describe the defect..." style="margin-bottom:10px;" oninput="S.defNotes=S.defNotes||{};S.defNotes[\''+c.id+'\']=this.value">':'')+
-        '<div class="check-btns">'+
-        '<button type="button" class="ck-btn pass-btn'+(res==='pass'?' active':'')+'" onclick="S.checkResults[\''+c.id+'\']=\'pass\';render()">✓ Pass</button>'+
-        '<button type="button" class="ck-btn fail-btn'+(res==='fail'?' active':'')+'" onclick="S.checkResults[\''+c.id+'\']=\'fail\';render()">✗ Fail</button>'+
-        '<button type="button" class="ck-btn na-btn'+(res==='na'?' active':'')+'" onclick="S.checkResults[\''+c.id+'\']=\'na\';render()">N/A</button>'+
-        '</div></div>';
-    }).join('')+
-    camWidget('pre','📷 Photo — Vehicle Condition')+
-    '<div class="form-group" style="margin-top:14px;"><label>Notes</label><textarea id="pre-notes" placeholder="Any observations..."></textarea></div>'+
-    '<div style="height:14px;"></div>'+
-    '<button class="btn btn-success" onclick="submitPre()">✅ Submit Pre-start</button>'+
-    '<button class="btn btn-ghost" style="margin-top:10px;" onclick="S.selVehicle=null;S.checkResults={};S.subpage=\'log\';render()">Cancel</button>'+
-    '</div></div>';
-}
-
-async function submitPre(){
-  var name=getV('pre-name');var opId=getV('pre-op');
-  if(!S.selVehicle){toast('Select vehicle type','error');return;}
-  if(!name){toast('Enter vehicle name','error');return;}
-  if(!opId){toast('Select operator','error');return;}
-  var checks=VEHICLES[S.selVehicle].checks;
-  var unanswered=checks.filter(function(c){return!S.checkResults[c.id];});
-  if(unanswered.length>0){toast(unanswered.length+' items not answered','error');return;}
-  var mem=S.members.find(function(m){return m.id===opId;});
-  var fails=checks.filter(function(c){return S.checkResults[c.id]==='fail';}).map(function(c){return c.l;});
-  var result=fails.length>0?'fail':'pass';
-  try{
-    await api('prestart_records',{method:'POST',body:JSON.stringify({
-      farm_id:S.farm.id,vehicle_type:S.selVehicle,vehicle_name:name,
-      operator_id:opId,operator_name:mem?mem.display_name:'Unknown',
-      checked_at:new Date().toISOString(),
-      check_results:S.checkResults,failed_items:fails,overall_result:result,
-      notes:getV('pre-notes')||null
-    })});
-    if(result==='fail')toast('⚠ Pre-start logged — DEFECTS recorded!','warning');
-    else toast('✓ Pre-start passed and logged');
-    S.checkResults={};S.prePhoto=null;S.selVehicle=null;S.subpage='log';await loadAll();render();
-  }catch(e){toast(e.message,'error');}
-}
-
-function preLog(){
-  return'<div class="page">'+
-    '<button class="btn btn-primary btn-sm" style="width:auto;margin-bottom:14px;" onclick="S.subpage=\'add\';S.selVehicle=null;S.checkResults={};render()">✅ New Pre-start</button>'+
-    (S.preRecs.length===0?'<div class="empty"><span class="icon">🚜</span><p>No pre-start records yet</p></div>':
-    S.preRecs.slice(0,30).map(function(r){var vt=VEHICLES[r.vehicle_type]||{icon:'⚙️'};var fail=r.overall_result==='fail';
-      return'<div class="list-item '+(fail?'danger-left':'success-left')+'" onclick="S.modal={type:\'pre\',rec:S.preRecs.find(function(x){return x.id===\''+r.id+'\'})};render()">'+
-        '<span class="item-icon">'+vt.icon+'</span>'+
-        '<div class="item-body"><div class="item-title">'+r.vehicle_name+'</div>'+
-        '<div class="item-sub">'+r.operator_name+' · '+fmt(r.checked_at)+'</div></div>'+
-        '<div class="item-right">'+(fail?'<span class="badge badge-fail">✗ Defects</span>':'<span class="badge badge-pass">✓ Pass</span>')+'</div></div>';
-    }).join(''))+
-    '</div>';
-}
-
-// ── VISITORS ──────────────────────────────────────────────────────────────
-function visPage(){
-  var sub=S.subpage||'onsite';
-  if(sub==='signin')return visSignIn();
-  return visOnsite();
-}
-
-function visOnsite(){
-  var onsite=S.visRecs.filter(function(r){return r.status==='on-site';});
-  var now=new Date();
-  return'<div class="page">'+
-    '<button class="btn btn-primary btn-sm" style="width:auto;margin-bottom:14px;" onclick="S.subpage=\'signin\';S.biosecAns={};S.sigData=null;render()">👤 Sign In Visitor</button>'+
-    (onsite.length>0?'<div class="section-title">On Site Now ('+onsite.length+')</div>':'')+
-    (onsite.length===0?'<div class="empty"><span class="icon">✅</span><p>No visitors on site</p></div>':
-    onsite.map(function(r){
-      var mins=Math.round((now-new Date(r.signed_in_at))/60000);
-      var t=mins<60?mins+' min':Math.floor(mins/60)+'h '+(mins%60)+'m';
-      return'<div class="list-item '+(r.biosec_risk?'danger-left':'success-left')+'" onclick="S.modal={type:\'vis\',rec:S.visRecs.find(function(x){return x.id===\''+r.id+'\'})};render()">'+
-        '<span class="item-icon">👤</span>'+
-        '<div class="item-body"><div class="item-title">'+r.visitor_name+'</div>'+
-        '<div class="item-sub">'+r.visitor_type+' · '+t+(r.biosec_risk?' · ⚠ Biosec Risk':'')+'</div></div>'+
-        '<div class="item-right"><button class="btn btn-success btn-sm" onclick="event.stopPropagation();visSignOut(\''+r.id+'\')">Out</button></div></div>';
-    }).join(''))+
-    '<div class="section-title">Recent Visitors</div>'+
-    (S.visRecs.filter(function(r){return r.status==='departed';}).length===0?'<div style="font-size:.85rem;color:var(--slate-light);padding:8px 0;">No departed visitors yet</div>':
-    S.visRecs.filter(function(r){return r.status==='departed';}).slice(0,10).map(function(r){
-      return'<div class="list-item" onclick="S.modal={type:\'vis\',rec:S.visRecs.find(function(x){return x.id===\''+r.id+'\'})};render()">'+
-        '<span class="item-icon">👤</span>'+
-        '<div class="item-body"><div class="item-title">'+r.visitor_name+'</div>'+
-        '<div class="item-sub">'+r.visitor_type+' · '+fmt(r.signed_in_at)+'</div></div>'+
-        '<div class="item-right">'+(r.biosec_risk?'<span class="badge badge-risk">⚠ Risk</span>':'<span class="badge badge-in">Cleared</span>')+'</div></div>';
-    }).join(''))+
-    '</div>';
-}
-
-function visSignIn(){
-  var typeOpts=VTYPES.map(function(t){return'<option>'+t+'</option>';}).join('');
-  var memOpts=S.members.map(function(m){return'<option>'+m.display_name+'</option>';}).join('');
-  var answered=Object.keys(S.biosecAns).length;
-  var risk=biosecRisk(S.biosecAns);
-
-  return'<div class="page"><div class="card">'+
-    '<div class="card-title">👤 Visitor Sign-In</div>'+
-    '<div class="form-group"><label>Full Name *</label><input id="v-name" placeholder="e.g. John Smith" required></div>'+
-    '<div class="form-group"><label>Company</label><input id="v-company" placeholder="e.g. Elders, AHB"></div>'+
-    '<div class="form-group"><label>Visitor Type *</label><select id="v-type"><option value="">-- Select --</option>'+typeOpts+'</select></div>'+
-    '<div class="form-group"><label>Phone</label><input id="v-phone" type="tel" placeholder="0412 345 678"></div>'+
-    '<div class="form-group"><label>Purpose of Visit *</label><input id="v-purpose" placeholder="e.g. Delivering fencing materials" required></div>'+
-    '<div class="form-group"><label>Who Are You Seeing?</label><input id="v-host" list="host-dl" placeholder="Farm staff member"><datalist id="host-dl">'+memOpts+'</datalist></div>'+
-    '<div class="section-title" style="'+(risk?'color:var(--danger);':'')+'">'+(risk?'⚠ ':'')+'Biosecurity Declaration ('+answered+'/'+BIOSEC.length+')</div>'+
-    '<div style="font-size:.82rem;color:var(--slate);margin-bottom:12px;">All visitors must complete this before entering the property.</div>'+
-    BIOSEC.map(function(q){
-      var ans=S.biosecAns[q.id]||'';
-      var isRisk=(q.risk&&ans==='yes')||(!q.risk&&ans==='no');
-      return'<div class="bio-item '+(ans?(isRisk?'risk':'ok'):'')+'">'+
-        '<div class="bio-q">'+q.q+'</div>'+
-        '<div class="bio-s">'+q.s+'</div>'+
-        (isRisk?'<div style="font-size:.76rem;color:var(--danger);margin-bottom:8px;font-weight:600;">⚠ Possible biosecurity risk</div>':'')+
-        '<div class="bio-btns">'+
-        '<button type="button" class="bio-btn yes-btn'+(ans==='yes'?' active':'')+'" onclick="S.biosecAns[\''+q.id+'\']=\'yes\';render()">Yes</button>'+
-        '<button type="button" class="bio-btn no-btn'+(ans==='no'?' active':'')+'" onclick="S.biosecAns[\''+q.id+'\']=\'no\';render()">No</button>'+
-        '</div></div>';
-    }).join('')+
-    '<div class="section-title">✍️ Signature</div>'+
-    '<canvas id="sig-pad" class="sig-pad"></canvas>'+
-    '<div style="margin-top:8px;margin-bottom:14px;"><button type="button" class="btn btn-ghost btn-sm" onclick="clearSig()">Clear Signature</button></div>'+
-    (risk?'<button class="btn btn-danger" onclick="submitVisitor()">⚠ Sign In — Biosec Risk</button>':
-    '<button class="btn btn-success" onclick="submitVisitor()">✓ Sign In Visitor</button>')+
-    '<button class="btn btn-ghost" style="margin-top:10px;" onclick="S.subpage=\'onsite\';S.biosecAns={};S.sigData=null;render()">Cancel</button>'+
-    '</div></div>';
-}
-
-async function submitVisitor(){
-  var name=getV('v-name');var type=getV('v-type');var purpose=getV('v-purpose');
-  if(!name){toast('Visitor name required','error');return;}
-  if(!type){toast('Select visitor type','error');return;}
-  if(!purpose){toast('Purpose required','error');return;}
-  var unanswered=BIOSEC.filter(function(q){return!S.biosecAns[q.id];});
-  if(unanswered.length>0){toast('Answer all biosecurity questions','error');return;}
-  var risk=biosecRisk(S.biosecAns);
-  try{
-    await api('visitor_records',{method:'POST',body:JSON.stringify({
-      farm_id:S.farm.id,visitor_name:name,company:getV('v-company')||null,
-      visitor_type:type,phone:getV('v-phone')||null,purpose:purpose,
-      host_name:getV('v-host')||null,signed_in_at:new Date().toISOString(),
-      biosec_answers:S.biosecAns,biosec_risk:risk,
-      signature:S.sigData||null,status:'on-site'
-    })});
-    if(risk)toast('⚠ Visitor signed in — BIOSEC RISK flagged','warning');
-    else toast('✓ '+name+' signed in');
-    S.biosecAns={};S.sigData=null;S.subpage='onsite';await loadAll();render();
-  }catch(e){toast(e.message,'error');}
-}
-
-async function visSignOut(id){
-  await api('visitor_records?id=eq.'+id,{method:'PATCH',body:JSON.stringify({signed_out_at:new Date().toISOString(),status:'departed'})});
-  var r=S.visRecs.find(function(x){return x.id===id;});
-  toast('✓ '+(r?r.visitor_name:'Visitor')+' signed out');S.modal=null;await loadAll();render();
-}
-
-// ── REPORT ────────────────────────────────────────────────────────────────
-function reportPage(){
-  if(S.rptGen){
-    return'<div class="page"><div class="card" style="text-align:center;padding:48px 20px;">'+
-      '<div class="spinner" style="width:32px;height:32px;border-width:3px;margin:0 auto 16px;"></div>'+
-      '<div style="font-family:\'DM Serif Display\',serif;font-size:1.2rem;color:var(--sky-dark);">Generating...</div>'+
-      '</div></div>';
-  }
-  if(S.rptDone&&S.rptData){
-    var d=S.rptData;
-    var total=d.shed.length+d.chem.length+d.pre.length+d.vis.length;
-    return'<div class="page">'+
-      '<div class="card" style="background:var(--sky-pale);border-color:var(--sky-mid);">'+
-      '<div style="font-family:\'DM Serif Display\',serif;font-size:1.2rem;color:var(--sky-dark);margin-bottom:6px;">✓ Report Ready</div>'+
-      '<div style="font-size:.85rem;color:var(--slate);margin-bottom:16px;">'+total+' records · '+fmtD(d.from)+' to '+fmtD(d.to)+'</div>'+
-      '<button class="btn btn-wheat" onclick="printReport()">🖨️ Print / Save PDF</button>'+
-      '<button class="btn btn-ghost" style="margin-top:10px;" onclick="S.rptDone=false;render()">← Reconfigure</button>'+
-      '<div style="margin-top:14px;font-size:.82rem;color:var(--sky-dark);">💡 In print dialog, change printer to <strong>Save as PDF</strong></div>'+
-      '</div></div>';
-  }
-
-  var modRows=[
-    {k:'shed',icon:'🏚️',title:'Shed & Equipment',count:S.shedRecs.length},
-    {k:'chem',icon:'🧪',title:'Chemical Records',count:S.chemRecs.length},
-    {k:'pre',icon:'🚜',title:'Vehicle Pre-starts',count:S.preRecs.length},
-    {k:'vis',icon:'👤',title:'Visitor Sign-In',count:S.visRecs.length}
-  ].map(function(m){var on=S.rptMods[m.k];return'<div class="mod-row '+(on?'on':'')+'" onclick="S.rptMods[\''+m.k+'\']=!S.rptMods[\''+m.k+'\'];render()">'+
-    '<span style="font-size:1.4rem;">'+m.icon+'</span>'+
-    '<div style="flex:1;"><div style="font-weight:600;font-size:.92rem;">'+m.title+'</div><div style="font-size:.78rem;color:var(--slate);">'+m.count+' records</div></div>'+
-    '<div class="tog '+(on?'on':'')+'"></div></div>';}).join('');
-
-  var ranges=['Last 30 days','Last 90 days','Last 6 months','This year'];
-  return'<div class="page"><div class="card">'+
-    '<div class="card-title">📄 Compliance Report</div>'+
-    '<div class="section-title">Date Range</div>'+
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">'+
-    '<div class="form-group"><label>From</label><input id="rpt-from" type="date" value="'+S.rptFrom+'" onchange="S.rptFrom=this.value"></div>'+
-    '<div class="form-group"><label>To</label><input id="rpt-to" type="date" value="'+S.rptTo+'" onchange="S.rptTo=this.value"></div>'+
-    '</div>'+
-    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">'+
-    ranges.map(function(r,i){return'<button class="btn btn-ghost btn-sm" onclick="setRptRange('+i+')">'+r+'</button>';}).join('')+
-    '</div>'+
-    '<div class="section-title">Include Modules</div>'+
-    modRows+
-    '<div style="height:14px;"></div>'+
-    '<button class="btn btn-wheat" onclick="generateReport()">📄 Generate Report</button>'+
-    '</div></div>';
-}
-
-function setRptRange(i){
-  var to=new Date();var from=new Date();
-  if(i===0){from.setDate(from.getDate()-30);}
-  else if(i===1){from.setDate(from.getDate()-90);}
-  else if(i===2){from.setMonth(from.getMonth()-6);}
-  else{from=new Date(to.getFullYear(),0,1);}
-  S.rptFrom=from.toISOString().slice(0,10);S.rptTo=to.toISOString().slice(0,10);
-  S.rptDone=false;render();
-}
-
-async function generateReport(){
-  S.rptGen=true;S.rptDone=false;render();
-  await loadAll();
-  var from=getV('rpt-from')||S.rptFrom;var to=getV('rpt-to')||S.rptTo;
-  S.rptData={
-    from:from,to:to,generated:new Date().toISOString(),
-    shed:S.rptMods.shed?S.shedRecs.filter(function(r){return inRange(r.checkout_at,from,to);}):[] ,
-    chem:S.rptMods.chem?S.chemRecs.filter(function(r){return inRange(r.applied_at,from,to);}):[] ,
-    pre:S.rptMods.pre?S.preRecs.filter(function(r){return inRange(r.checked_at,from,to);}):[] ,
-    vis:S.rptMods.vis?S.visRecs.filter(function(r){return inRange(r.signed_in_at,from,to);}):[]
-  };
-  S.rptGen=false;S.rptDone=true;render();
-  toast('✓ Report ready — '+(S.rptData.shed.length+S.rptData.chem.length+S.rptData.pre.length+S.rptData.vis.length)+' records');
-}
-
-function printReport(){
-  var d=S.rptData;var farm=S.farm;
-  var ts='width:100%;border-collapse:collapse;font-size:10px;margin-bottom:20px;';
-  var ths='background:#1a4f7a;color:white;padding:6px 8px;text-align:left;font-size:9px;text-transform:uppercase;';
-  var tds='padding:5px 8px;border-bottom:1px solid #d0e4f0;font-size:10px;';
-  var alt='background:#f0f7fd;';
-  function sHdr(icon,title,count){return'<div style="background:#1a4f7a;color:white;padding:8px 12px;margin:16px 0 0;border-radius:4px 4px 0 0;display:flex;justify-content:space-between;"><span style="font-size:12px;font-weight:600;">'+icon+' '+title+'</span><span style="font-size:10px;opacity:.8;">'+count+' records</span></div>';}
-  function noData(){return'<div style="text-align:center;padding:12px;color:#7a9ab5;font-size:10px;border:1px solid #d0e4f0;border-top:none;margin-bottom:16px;">No records in this period</div>';}
-
-  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Farm Compliance Report</title>'+
-    '<style>body{font-family:Georgia,serif;color:#1a1a2e;margin:15mm;font-size:11pt;}table{width:100%;border-collapse:collapse;}@media print{@page{margin:10mm;}}</style>'+
-    '</head><body>'+
-    '<div style="text-align:center;padding:24px 0 20px;border-bottom:3px solid #e8b84b;margin-bottom:20px;">'+
-    '<div style="font-size:2rem;margin-bottom:4px;">🌾</div>'+
-    '<div style="font-family:Georgia,serif;font-size:22px;color:#0f3252;font-weight:bold;margin-bottom:2px;">The Farmer\'s Friend</div>'+
-    '<div style="font-size:16px;color:#1a4f7a;margin-bottom:14px;">Farm Compliance Report</div>'+
-    '<div style="display:inline-block;background:#e8f3fb;border:1px solid #b8d9f0;border-radius:6px;padding:10px 20px;">'+
-    '<div style="font-size:13px;color:#0f3252;font-weight:600;">'+(farm?farm.name:'')+'</div>'+
-    '<div style="font-size:11px;color:#4a6075;">ABN: 29 165 703 108 · thefarmersfriend.com.au</div></div>'+
-    '<div style="margin-top:12px;font-size:12px;color:#4a6075;">Period: '+fmtD(d.from)+' — '+fmtD(d.to)+' · Generated: '+fmt(d.generated)+'</div></div>';
-
-  if(S.rptMods.shed&&d.shed.length>0){
-    html+=sHdr('🏚️','Shed & Equipment Log',d.shed.length)+
-      '<table style="'+ts+'border-top:none;"><thead><tr>'+['Item','By','Checked Out','Status','Returned','Condition'].map(function(h){return'<th style="'+ths+'">'+h+'</th>';}).join('')+'</tr></thead><tbody>'+
-      d.shed.map(function(r,i){var od=r.status==='out'&&r.expected_return_at&&new Date(r.expected_return_at)<new Date();return'<tr style="'+(i%2===0?alt:'')+'"><td style="'+tds+'font-weight:600;">'+r.item_name+'</td><td style="'+tds+'">'+r.checkout_by_name+'</td><td style="'+tds+'">'+fmt(r.checkout_at)+'</td><td style="'+tds+(od?'color:#c0392b;font-weight:600;':'')+'">'+r.status+(od?' ⚠':'')+'</td><td style="'+tds+'">'+fmt(r.return_at)+'</td><td style="'+tds+'">'+(r.condition_on_return||'—')+'</td></tr>';}).join('')+'</tbody></table>';
-  } else if(S.rptMods.shed){html+=sHdr('🏚️','Shed & Equipment Log',0)+noData();}
-
-  if(S.rptMods.chem&&d.chem.length>0){
-    html+=sHdr('🧪','Chemical & Spray Records',d.chem.length)+
-      '<table style="'+ts+'border-top:none;"><thead><tr>'+['Chemical','APVMA','Paddock','Applied','Rate','Operator','Wind','Temp','WHP Days','Clears'].map(function(h){return'<th style="'+ths+'">'+h+'</th>';}).join('')+'</tr></thead><tbody>'+
-      d.chem.map(function(r,i){var cd=r.withholding_days?new Date(new Date(r.applied_at).getTime()+r.withholding_days*86400000):null;return'<tr style="'+(i%2===0?alt:'')+'"><td style="'+tds+'font-weight:600;">'+r.chemical_name+'</td><td style="'+tds+'">'+(r.apvma_number||'—')+'</td><td style="'+tds+'">'+r.paddock+'</td><td style="'+tds+'">'+fmt(r.applied_at)+'</td><td style="'+tds+'">'+(r.application_rate||'—')+'</td><td style="'+tds+'">'+r.operator_name+'</td><td style="'+tds+'">'+(r.wind_speed_kmh?r.wind_speed_kmh+' km/h':'—')+'</td><td style="'+tds+'">'+(r.temperature_c?r.temperature_c+'°C':'—')+'</td><td style="'+tds+'">'+(r.withholding_days||0)+'</td><td style="'+tds+'">'+(cd?fmtD(cd.toISOString()):'—')+'</td></tr>';}).join('')+'</tbody></table>';
-  } else if(S.rptMods.chem){html+=sHdr('🧪','Chemical & Spray Records',0)+noData();}
-
-  if(S.rptMods.pre&&d.pre.length>0){
-    html+=sHdr('🚜','Vehicle Pre-start Checks',d.pre.length)+
-      '<table style="'+ts+'border-top:none;"><thead><tr>'+['Vehicle','Type','Operator','Date & Time','Result','Defects'].map(function(h){return'<th style="'+ths+'">'+h+'</th>';}).join('')+'</tr></thead><tbody>'+
-      d.pre.map(function(r,i){var fail=r.overall_result==='fail';return'<tr style="'+(i%2===0?alt:'')+'"><td style="'+tds+'font-weight:600;">'+r.vehicle_name+'</td><td style="'+tds+'">'+r.vehicle_type+'</td><td style="'+tds+'">'+r.operator_name+'</td><td style="'+tds+'">'+fmt(r.checked_at)+'</td><td style="'+tds+'font-weight:600;color:'+(fail?'#c0392b':'#2d7a3a')+'">'+(fail?'✗ Defects':'✓ Pass')+'</td><td style="'+tds+'color:'+(fail?'#c0392b':'inherit')+'">'+(r.failed_items&&r.failed_items.length?r.failed_items.join(', '):'—')+'</td></tr>';}).join('')+'</tbody></table>';
-  } else if(S.rptMods.pre){html+=sHdr('🚜','Vehicle Pre-start Checks',0)+noData();}
-
-  if(S.rptMods.vis&&d.vis.length>0){
-    html+=sHdr('👤','Visitor Sign-In',d.vis.length)+
-      '<table style="'+ts+'border-top:none;"><thead><tr>'+['Name','Company','Type','Purpose','Signed In','Signed Out','Biosec'].map(function(h){return'<th style="'+ths+'">'+h+'</th>';}).join('')+'</tr></thead><tbody>'+
-      d.vis.map(function(r,i){return'<tr style="'+(i%2===0?alt:'')+'"><td style="'+tds+'font-weight:600;">'+r.visitor_name+'</td><td style="'+tds+'">'+(r.company||'—')+'</td><td style="'+tds+'">'+r.visitor_type+'</td><td style="'+tds+'">'+(r.purpose||'—')+'</td><td style="'+tds+'">'+fmt(r.signed_in_at)+'</td><td style="'+tds+'">'+fmt(r.signed_out_at)+'</td><td style="'+tds+'font-weight:600;color:'+(r.biosec_risk?'#c0392b':'#2d7a3a')+'">'+(r.biosec_risk?'⚠ Risk':'✓ Clear')+'</td></tr>';}).join('')+'</tbody></table>';
-  } else if(S.rptMods.vis){html+=sHdr('👤','Visitor Sign-In',0)+noData();}
-
-  html+='<div style="margin-top:32px;padding:16px;background:#f7fafd;border:1px solid #d0e4f0;border-radius:6px;">'+
-    '<div style="font-weight:600;margin-bottom:6px;">Declaration</div>'+
-    '<div style="font-size:11px;color:#4a6075;line-height:1.6;">I declare the information in this report is true and correct to the best of my knowledge. All records captured in real-time using The Farmer\'s Friend farm management system.</div>'+
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:20px;">'+
-    '<div><div style="border-bottom:1px solid #1a4f7a;height:40px;margin-bottom:4px;"></div><div style="font-size:10px;color:#4a6075;">Farm Manager Signature</div></div>'+
-    '<div><div style="border-bottom:1px solid #1a4f7a;height:40px;margin-bottom:4px;"></div><div style="font-size:10px;color:#4a6075;">Date</div></div></div></div>'+
-    '<div style="margin-top:14px;text-align:center;font-size:9px;color:#b8d9f0;">The Farmer\'s Friend · thefarmersfriend.com.au · ABN 29 165 703 108</div>'+
-    '</body></html>';
-
-  var win=window.open('','_blank');
-  win.document.write(html);win.document.close();
-  setTimeout(function(){win.print();},500);
-}
-
-// ── MODAL SHEET ───────────────────────────────────────────────────────────
-function sheetHTML(){
-  var m=S.modal;if(!m)return'';
-  var r=m.rec;if(!r)return'';
-  var body='';
-
-  if(m.type==='shed'){
-    body='<div class="sheet-title">📦 '+r.item_name+'</div>'+
-      detailRows([['Item',r.item_name],['Category',r.category||'—'],['Checked Out By',r.checkout_by_name],['Checked Out',fmt(r.checkout_at)],['Expected Return',fmt(r.expected_return_at)],['Destination',r.destination||'—'],['Status',r.status==='out'?'🔓 Out':'🔒 Returned'],['Returned By',r.return_by_name||'—'],['Returned At',fmt(r.return_at)],['Condition',r.condition_on_return||'—'],['Notes',r.checkout_notes||'—']])+
-      (r.status==='out'?'<button class="btn btn-success" style="margin-top:16px;" onclick="quickReturn(\''+r.id+'\')">↩ Quick Return</button>':'');
-  }else if(m.type==='chem'){
-    var s=whpStatus(r);var cd=r.withholding_days?new Date(new Date(r.applied_at).getTime()+r.withholding_days*86400000):null;
-    body='<div class="sheet-title">🧪 '+r.chemical_name+'</div>'+
-      '<div style="margin-bottom:14px;"><span class="badge '+s.cls+'">'+s.label+'</span></div>'+
-      (s.pct>0?'<div class="whp-bar" style="margin-bottom:14px;"><div class="whp-fill" style="width:'+s.pct+'%;background:'+(s.pct>70?'var(--grass)':s.pct>40?'var(--wheat)':'var(--orange)')+'"></div></div>':'')+
-      detailRows([['Chemical',r.chemical_name],['APVMA',r.apvma_number||'—'],['Paddock',r.paddock],['Applied',fmt(r.applied_at)],['Rate',r.application_rate||'—'],['Area',r.area_treated_ha?r.area_treated_ha+' ha':'—'],['Operator',r.operator_name],['Licence',r.operator_licence||'—'],['Wind',r.wind_speed_kmh?r.wind_speed_kmh+' km/h '+(r.wind_direction||''):'—'],['Temp',r.temperature_c?r.temperature_c+'°C':'—'],['WHP Days',r.withholding_days||0],['Clears',cd?fmtD(cd.toISOString()):'—'],['Notes',r.notes||'—']]);
-  }else if(m.type==='pre'){
-    var vt=VEHICLES[r.vehicle_type]||{icon:'⚙️'};
-    body='<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">'+
-      '<span style="font-size:2.2rem;">'+vt.icon+'</span>'+
-      '<div><div class="sheet-title" style="margin-bottom:4px;">'+r.vehicle_name+'</div>'+
-      '<span class="badge '+(r.overall_result==='fail'?'badge-fail':'badge-pass')+'">'+(r.overall_result==='fail'?'✗ Defects':'✓ Pass')+'</span></div></div>'+
-      detailRows([['Type',r.vehicle_type],['Operator',r.operator_name],['Date',fmt(r.checked_at)],['Defects',r.failed_items&&r.failed_items.length?r.failed_items.join(', '):'None'],['Notes',r.notes||'—']]);
-  }else if(m.type==='vis'){
-    body='<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">'+
-      '<div style="width:48px;height:48px;border-radius:50%;background:'+(r.biosec_risk?'var(--danger)':'var(--sky)')+';display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:700;color:white;">'+r.visitor_name.charAt(0)+'</div>'+
-      '<div><div class="sheet-title" style="margin-bottom:4px;">'+r.visitor_name+'</div>'+
-      (r.biosec_risk?'<span class="badge badge-risk">⚠ Biosec Risk</span>':'<span class="badge badge-in">✓ Cleared</span>')+
-      '</div></div>'+
-      detailRows([['Company',r.company||'—'],['Type',r.visitor_type],['Purpose',r.purpose||'—'],['Phone',r.phone||'—'],['Signed In',fmt(r.signed_in_at)],['Signed Out',fmt(r.signed_out_at)],['Duration',dur(r.signed_in_at,r.signed_out_at)],['Host',r.host_name||'—']])+
-      (r.status==='on-site'?'<button class="btn btn-success" style="margin-top:16px;" onclick="visSignOut(\''+r.id+'\')">Sign Out Visitor</button>':'');
-  }
-
-  return'<div class="sheet-bg" onclick="if(event.target===this){S.modal=null;render();}">'+
-    '<div class="sheet">'+
-    '<div class="sheet-handle"></div>'+
-    body+
-    '<button class="btn btn-ghost" style="margin-top:12px;" onclick="S.modal=null;render()">Close</button>'+
-    '</div></div>';
-}
-
-function detailRows(rows){
-  return rows.map(function(f){
-    return'<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem;gap:12px;">'+
-      '<span style="font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);flex-shrink:0;">'+f[0]+'</span>'+
-      '<span style="text-align:right;color:var(--sky-deeper);">'+f[1]+'</span></div>';
-  }).join('');
-}
-
-async function quickReturn(id){
-  var r=S.shedRecs.find(function(x){return x.id===id;});
-  await api('shed_records?id=eq.'+id,{method:'PATCH',body:JSON.stringify({status:'returned',return_at:new Date().toISOString(),return_by_name:r?r.checkout_by_name:'Unknown',condition_on_return:'Good — no issues'})});
-  toast('✓ '+(r?r.item_name:'Item')+' returned');S.modal=null;await loadAll();render();
-}
-
-function goPage(page,sub){
-  S.page=page;S.subpage=sub||null;S.modal=null;
-  loadAll().then(render);
-}
-
-document.addEventListener('submit',async function(e){
-  if(e.target.id!=='auth-form')return;
-  e.preventDefault();
-  var f=e.target;S.authError='';
-  try{
-    if(S.authMode==='signup')await doSignUp(f.email.value,f.password.value,f.displayName.value,f.farmName.value);
-    else await doSignIn(f.email.value,f.password.value);
-    await loadAll();toast('Welcome! 🌾');render();
-  }catch(err){S.authError=err.message;render();}
-});
-
-async function boot(){
-  if(S.session){
-    try{var uid=S.session.user?S.session.user.id:null;if(uid){await loadCtx(uid);await loadAll();}}
-    catch(e){doSignOut();return;}
-  }
-  render();
-}
-boot();
-</script>
 </body>
 </html>
-<!-- ONE-TAP SPEED PATCH — appended after main script -->
-<script>
-// ── Remember last used member & item ─────────────────────────────────────
-function rememberLast(key, val) { try { localStorage.setItem('ff_last_'+key, val); } catch(e){} }
-function getLast(key) { try { return localStorage.getItem('ff_last_'+key)||''; } catch(e){ return ''; } }
-
-// ── Haptic feedback (iPhone) ──────────────────────────────────────────────
-function haptic(type) {
-  if (!window.navigator || !window.navigator.vibrate) return;
-  if (type === 'success') navigator.vibrate(50);
-  else if (type === 'error') navigator.vibrate([100, 50, 100]);
-  else if (type === 'tap') navigator.vibrate(10);
-}
-
-// ── Override submitCheckout to add haptic + remember ─────────────────────
-var _origCheckout = submitCheckout;
-submitCheckout = async function() {
-  var memId = getV('co-mem');
-  var item = getV('co-item');
-  if (memId) rememberLast('member', memId);
-  if (item) rememberLast('item', item);
-  try {
-    await _origCheckout();
-    haptic('success');
-  } catch(e) {
-    haptic('error');
-  }
-};
-
-// ── Override submitCheckin to add haptic ─────────────────────────────────
-var _origCheckin = submitCheckin;
-submitCheckin = async function() {
-  try { await _origCheckin(); haptic('success'); } catch(e) { haptic('error'); }
-};
-
-// ── Patch shedCheckout to pre-select last used member & item ─────────────
-var _origShedCheckout = shedCheckout;
-shedCheckout = function() {
-  var html = _origShedCheckout();
-  // After render, pre-fill last used values
-  setTimeout(function() {
-    var lastMem = getLast('member');
-    var lastItem = getLast('item');
-    var memEl = document.getElementById('co-mem');
-    var itemEl = document.getElementById('co-item');
-    if (memEl && lastMem) memEl.value = lastMem;
-    if (itemEl && lastItem) itemEl.value = lastItem;
-  }, 50);
-  return html;
-};
-
-// ── Swipe to return on list items ─────────────────────────────────────────
-var swipeStart = null;
-document.addEventListener('touchstart', function(e) {
-  swipeStart = { x: e.touches[0].clientX, y: e.touches[0].clientY, time: Date.now() };
-}, { passive: true });
-
-document.addEventListener('touchend', function(e) {
-  if (!swipeStart) return;
-  var dx = e.changedTouches[0].clientX - swipeStart.x;
-  var dy = e.changedTouches[0].clientY - swipeStart.y;
-  var dt = Date.now() - swipeStart.time;
-  // Right swipe — fast, horizontal, not too much vertical movement
-  if (dx > 80 && Math.abs(dy) < 40 && dt < 400) {
-    // Find if we swiped on a shed list item that's "out"
-    var el = e.target;
-    while (el && el !== document.body) {
-      if (el.classList && el.classList.contains('list-item')) {
-        // Find the record ID from the onclick
-        var onclick = el.getAttribute('onclick') || '';
-        var match = onclick.match(/id==='([^']+)'/);
-        if (match) {
-          var recId = match[1];
-          var rec = S.shedRecs.find(function(r) { return r.id === recId && r.status === 'out'; });
-          if (rec) {
-            haptic('success');
-            // Show quick confirm
-            if (confirm('Return "' + rec.item_name + '"?')) {
-              quickReturn(recId);
-            }
-          }
-        }
-        break;
-      }
-      el = el.parentElement;
-    }
-  }
-  swipeStart = null;
-}, { passive: true });
-
-// ── Quick-add floating button on home page ────────────────────────────────
-// Patch homePage to add a big floating checkout button
-var _origHomePage = homePage;
-homePage = function(now, outCount, onsiteCount, overdueCount) {
-  var html = _origHomePage(now, outCount, onsiteCount, overdueCount);
-  return html;
-};
-
-// ── iOS "Add to Home Screen" prompt ──────────────────────────────────────
-function isIOS() {
-  return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
-}
-function isInStandaloneMode() {
-  return ('standalone' in window.navigator) && window.navigator.standalone;
-}
-
-if (isIOS() && !isInStandaloneMode() && !localStorage.getItem('ff_ios_prompt_shown')) {
-  setTimeout(function() {
-    var banner = document.createElement('div');
-    banner.style.cssText = 'position:fixed;bottom:calc(68px + env(safe-area-inset-bottom));left:12px;right:12px;background:#0f3252;color:white;border-radius:16px;padding:14px 16px;z-index:9999;font-family:DM Sans,sans-serif;font-size:.88rem;display:flex;align-items:center;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.4);';
-    banner.innerHTML = '<span style="font-size:1.6rem;">🌾</span>'+
-      '<div style="flex:1;"><div style="font-weight:700;margin-bottom:2px;">Install on your iPhone!</div>'+
-      '<div style="opacity:.8;font-size:.78rem;">Tap Share → "Add to Home Screen" for one-tap access</div></div>'+
-      '<button onclick="this.parentElement.remove();localStorage.setItem(\'ff_ios_prompt_shown\',\'1\')" style="background:rgba(255,255,255,.15);border:none;color:white;border-radius:8px;padding:6px 12px;cursor:pointer;font-family:DM Sans;font-weight:600;font-size:.82rem;">Got it</button>';
-    document.body.appendChild(banner);
-  }, 3000);
-}
-
-console.log('🌾 The Farmers Friend — Speed patch loaded');
-</script>
