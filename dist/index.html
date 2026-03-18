@@ -539,12 +539,14 @@ function appShell(){
   else if(S.page==='pre')content=prePage();
   else if(S.page==='vis')content=visPage();
   else if(S.page==='report')content=reportPage();
+  else if(S.page==='account')content=accountPage();
 
   return '<div id="app">'+
     '<div class="top-bar">'+
     '<div class="logo">🌾</div>'+
     '<div><div class="title">The Farmer\'s Friend</div><div class="farm">'+(S.farm?S.farm.name:'')+'</div></div>'+
     '<div class="clock" id="clock"><div class="time"></div><div class="date"></div></div>'+
+    '<button onclick="if(confirm('Sign out?'))doSignOut()" style="background:rgba(255,255,255,.15);border:none;color:white;border-radius:10px;padding:8px 12px;cursor:pointer;font-family:DM Sans;font-size:.78rem;font-weight:600;flex-shrink:0;margin-left:6px;">Out</button>'+
     '</div>'+
     '<div class="page-wrap">'+content+'</div>'+
     '<nav class="bottom-nav">'+nav+'</nav>'+
@@ -1177,6 +1179,29 @@ document.addEventListener('submit',async function(e){
     await loadAll();toast('Welcome! 🌾');render();
   }catch(err){S.authError=err.message;render();}
 });
+
+function accountPage(){
+  return'<div class="page">'+
+    '<div style="text-align:center;padding:24px 0 20px;">'+
+    '<div style="width:72px;height:72px;background:var(--sky);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700;color:white;margin:0 auto 12px;">'+(S.member?S.member.display_name.charAt(0):'?')+'</div>'+
+    '<div style="font-family:\'DM Serif Display\',serif;font-size:1.2rem;color:var(--sky-dark);">'+(S.member?S.member.display_name:'')+'</div>'+
+    '<div style="font-size:.8rem;color:var(--slate);margin-top:3px;">'+(S.member?S.member.role.toUpperCase():'')+' · '+(S.farm?S.farm.name:'')+'</div>'+
+    '</div>'+
+    '<div class="card" style="margin-bottom:12px;">'+
+    '<div class="card-title">📄 Compliance Report</div>'+
+    '<div style="font-size:.88rem;color:var(--slate);margin-bottom:14px;">Generate a PDF report of all records for WorkSafe, food safety audits and insurance.</div>'+
+    '<button class="btn btn-primary" onclick="S.page=\'report\';render()">📄 Generate Report</button>'+
+    '</div>'+
+    '<div class="card" style="margin-bottom:12px;">'+
+    '<div class="card-title">ℹ️ Farm Details</div>'+
+    '<div style="font-size:.9rem;"><div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;"><span style="color:var(--slate);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Farm</span><span>'+(S.farm?S.farm.name:'—')+'</span></div>'+
+    '<div style="padding:10px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;"><span style="color:var(--slate);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">Your Name</span><span>'+(S.member?S.member.display_name:'—')+'</span></div>'+
+    '<div style="padding:10px 0;display:flex;justify-content:space-between;"><span style="color:var(--slate);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;">ABN</span><span>29 165 703 108</span></div>'+
+    '</div></div>'+
+    '<button class="btn btn-danger" onclick="if(confirm(\'Sign out of The Farmer\'s Friend?\'))doSignOut()" style="margin-top:4px;">Sign Out</button>'+
+    '<div style="text-align:center;margin-top:20px;font-size:.72rem;color:var(--slate-light);">The Farmer\'s Friend · thefarmersfriend.com.au</div>'+
+    '</div>';
+}
 
 async function boot(){
   if(S.session){
